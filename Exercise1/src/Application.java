@@ -11,6 +11,7 @@ public class Application implements Runnable {
     public void run() {
         SaxionApp.printLine("Hello World!");
         SaxionApp.printLine("Work finally you motherfucker");
+        SaxionApp.printLine("Werk motherfucker!!");
     }
 
 }
