@@ -10,7 +10,10 @@ public class Application implements Runnable {
 
     public void run() {
         SaxionApp.printLine("Hello World!");
+<<<<<<< HEAD
         SaxionApp.printLine("Work finally you motherfucker");
+=======
+>>>>>>> main
     }
 
 }
