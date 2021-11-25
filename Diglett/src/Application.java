@@ -21,7 +21,7 @@ public class Application implements Runnable {
             for(int col = 0; col < grid[row].length; col++){ //for loops to go through the grid and fill it
 
                 Mine newValue = new Mine();
-                newValue.rocks = (SaxionApp.getRandomValueBetween(1,4)*2 ); //set Rocks
+                newValue.rocks = (SaxionApp.getRandomValueBetween(1,4)*2); //set Rocks
                 int randomValue = SaxionApp.getRandomValueBetween(1,101); //set Minerals
 
                 if(randomValue >= 1 && randomValue <= 14){
@@ -35,6 +35,7 @@ public class Application implements Runnable {
         return grid;
     }
     public void drawGrid(Mine[][] grid){
+        SaxionApp.clear();
         for(int row = 0; row < grid.length; row++){
             for(int col = 0; col < grid[row].length; col++){
                 SaxionApp.drawImage("Graphics/Steen6.png",row*64,col*64,64,64);
