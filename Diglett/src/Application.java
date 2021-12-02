@@ -88,7 +88,7 @@ public class Application implements Runnable {
         SaxionApp.clear();
         SaxionApp.resize(1000, 530); //Resize scherm voor main menu
 
-        //achtergrond kleur en tekst kleur
+        //Achtergrond kleur, border uit en tekst kleur
         SaxionApp.setBackgroundColor(SaxionApp.createColor(229, 190, 228));
         SaxionApp.turnBorderOff();
         SaxionApp.setFill(Color.WHITE);
@@ -108,18 +108,19 @@ public class Application implements Runnable {
         SaxionApp.drawBorderedText("Sterre Liedewij", 780, 450, 20);
         SaxionApp.drawBorderedText("Jeroen Groen in't Woud",780, 475, 20);
 
-        int MenuChoice = SaxionApp.readInt();
+        //menu functionaliteit
+        int MenuChoice = SaxionApp.readChar();
 
-        if (MenuChoice == 1) {
+        if (MenuChoice == '1') {
             SaxionApp.resize(832, 670);
             Mine[][] grid = createGrid();
             grid = addMineralsLvl1(grid);
             drawGrid(grid);
 
-        } else if (MenuChoice == 2) {
+        } else if (MenuChoice == '2') {
             SaxionApp.resize(832, 670);
 
-        } else if (MenuChoice == 3) {
+        } else if (MenuChoice == '3') {
             SaxionApp.clear();
             SaxionApp.drawBorderedText("Thank You for Playing", 125, 200, 75);
             SaxionApp.drawBorderedText("We hope to see you again", 350, 275, 25);
