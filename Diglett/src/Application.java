@@ -1,5 +1,7 @@
 import nl.saxion.app.SaxionApp;
 
+import java.awt.*;
+
 public class Application implements Runnable {
 
     public static void main(String[] args) {
@@ -8,8 +10,7 @@ public class Application implements Runnable {
 
     public void run() {
         // Your code goes here!
-        Mine[][] grid = createGrid();
-        drawGrid(grid);
+        MainMenu();
     }
 
     public Mine[][] createGrid(){
@@ -77,5 +78,50 @@ public class Application implements Runnable {
 
             }
         }
+    }
+
+    public void MainMenu() {
+        SaxionApp.clear();
+        SaxionApp.resize(1000, 530); //Resize scherm voor main menu
+
+        //achtergrond kleur en tekst kleur
+        SaxionApp.setBackgroundColor(SaxionApp.createColor(229, 190, 228));
+        SaxionApp.turnBorderOff();
+        SaxionApp.setFill(Color.WHITE);
+
+        //titel
+        SaxionApp.drawBorderedText("Titel", 50, 50, 100);
+
+        //keuzes in menu
+        SaxionApp.drawBorderedText("1. New Game", 50, 200, 25);
+        SaxionApp.drawBorderedText("2. Load Save", 50, 250, 25);
+        SaxionApp.drawBorderedText("3. Exit", 50, 300, 25);
+
+        //made by list
+        SaxionApp.drawBorderedText("Made By: ", 690, 400, 20);
+        SaxionApp.drawBorderedText("Anton Vorderman", 780, 400, 20);
+        SaxionApp.drawBorderedText("Ilse Jansen", 780, 425, 20);
+        SaxionApp.drawBorderedText("Sterre Liedewij", 780, 450, 20);
+        SaxionApp.drawBorderedText("Jeroen Groen in't Woud",780, 475, 20);
+
+        int MenuChoice = SaxionApp.readInt();
+
+        if (MenuChoice == 1) {
+            SaxionApp.resize(832, 670);
+            Mine[][] grid = createGrid();
+            drawGrid(grid);
+
+        } else if (MenuChoice == 2) {
+            SaxionApp.resize(832, 670);
+
+        } else if (MenuChoice == 3) {
+            SaxionApp.clear();
+            SaxionApp.drawBorderedText("Thank You for Playing", 125, 200, 75);
+            SaxionApp.drawBorderedText("We hope to see you again", 350, 275, 25);
+
+        }
+
+
+
     }
 }
