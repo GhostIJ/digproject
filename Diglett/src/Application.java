@@ -107,7 +107,7 @@ public class Application implements Runnable {
         SaxionApp.drawBorderedText("Ilse Jansen", 780, 425, 20);
         SaxionApp.drawBorderedText("Sterre Liedewij", 780, 450, 20);
         SaxionApp.drawBorderedText("Jeroen Groen in't Woud",780, 475, 20);
-
+        
         //menu functionaliteit
         int MenuChoice = SaxionApp.readChar();
 
