@@ -27,6 +27,10 @@ public class Application implements Runnable {
                 grid[row][col] = newValue;
             }
         }
+        return grid;
+    }
+
+    public Mine[][] addMineralsLvl1(Mine[][] grid){
         int randomValue = SaxionApp.getRandomValueBetween(3,6); //Amount of materials
         for(int x = 0; x < randomValue; x++){
             int randomX = SaxionApp.getRandomValueBetween(0, 12);
@@ -47,9 +51,9 @@ public class Application implements Runnable {
                 }
             }
         }
-
         return grid;
     }
+
     public void drawGrid(Mine[][] grid){
         SaxionApp.clear();
         for(int row = 0; row < grid.length; row++){
@@ -109,6 +113,7 @@ public class Application implements Runnable {
         if (MenuChoice == 1) {
             SaxionApp.resize(832, 670);
             Mine[][] grid = createGrid();
+            grid = addMineralsLvl1(grid);
             drawGrid(grid);
 
         } else if (MenuChoice == 2) {
