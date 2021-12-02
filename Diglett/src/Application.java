@@ -127,4 +127,53 @@ public class Application implements Runnable {
         }
     }
 
+<<<<<<< HEAD
+=======
+    public void MainMenu() {
+        SaxionApp.clear();
+        SaxionApp.resize(1000, 530); //Resize scherm voor main menu
+
+        //Achtergrond kleur, border uit en tekst kleur
+        SaxionApp.setBackgroundColor(SaxionApp.createColor(229, 190, 228));
+        SaxionApp.turnBorderOff();
+        SaxionApp.setFill(Color.WHITE);
+
+        //titel
+        SaxionApp.drawBorderedText("Titel", 50, 50, 100);
+
+        //keuzes in menu
+        SaxionApp.drawBorderedText("1. New Game", 50, 200, 25);
+        SaxionApp.drawBorderedText("2. Load Save", 50, 250, 25);
+        SaxionApp.drawBorderedText("3. Exit", 50, 300, 25);
+
+        //made by list
+        SaxionApp.drawBorderedText("Made By: ", 690, 400, 20);
+        SaxionApp.drawBorderedText("Anton Vorderman", 780, 400, 20);
+        SaxionApp.drawBorderedText("Ilse Jansen", 780, 425, 20);
+        SaxionApp.drawBorderedText("Sterre Liedewij", 780, 450, 20);
+        SaxionApp.drawBorderedText("Jeroen Groen in't Woud",780, 475, 20);
+        
+        //menu functionaliteit
+        int MenuChoice = SaxionApp.readChar();
+
+        if (MenuChoice == '1') {
+            SaxionApp.resize(832, 670);
+            Mine[][] grid = createGrid();
+            grid = addMineralsLvl1(grid);
+            drawGrid(grid);
+
+        } else if (MenuChoice == '2') {
+            SaxionApp.resize(832, 670);
+
+        } else if (MenuChoice == '3') {
+            SaxionApp.clear();
+            SaxionApp.drawBorderedText("Thank You for Playing", 125, 200, 75);
+            SaxionApp.drawBorderedText("We hope to see you again", 350, 275, 25);
+
+        }
+
+
+
+    }
+>>>>>>> main
 }
