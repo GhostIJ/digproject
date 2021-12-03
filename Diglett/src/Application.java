@@ -27,7 +27,7 @@ public class Application implements Runnable {
 
         //keuzes in menu
         SaxionApp.drawBorderedText("1. New Game", 50, 200, 25);
-        SaxionApp.drawBorderedText("2. Load Save", 50, 250, 25);
+        SaxionApp.drawBorderedText("2. Load Game", 50, 250, 25);
         SaxionApp.drawBorderedText("3. Exit", 50, 300, 25);
 
         //made by list
@@ -45,6 +45,7 @@ public class Application implements Runnable {
             Mine[][] grid = createGrid();
             grid = addMineralsLvl1(grid);
             drawGrid(grid);
+            selectAndClick(grid);
 
         } else if (MenuChoice == '2') {
             SaxionApp.resize(832, 670);
@@ -119,11 +120,61 @@ public class Application implements Runnable {
                 else if(grid[row][col].rocks == 1){
                     SaxionApp.drawImage("Graphics/Steen6.png",row*64,col*64,64,64);
                 }
-                else if(grid[row][col].rocks == 0){
+                else if(grid[row][col].rocks <= 0){
                     SaxionApp.drawImage("Graphics/Steen6.png",row*64,col*64,64,64);
                 }
             }
         }
+    }
+
+    public int[] selectAndClick(Mine[][] grid){
+        int[] coords = new int[2];
+        coords[0] = 6;
+        coords[1] = 4;
+        SaxionApp.drawImage("Graphics/Crosshair.png", coords[0]*64, coords[1]*64, 64, 64);
+        boolean running = true;
+
+        while(running){
+            char inputC = SaxionApp.readChar();
+            switch (inputC){
+                case 'a':       //naar links
+                    if(coords[0]>0){
+                        coords[0]--;
+                    }
+                    break;
+                case 'd':       //naar rechts
+                    if(coords[0]<12){
+                        coords[0]++;
+                    }
+                    break;
+                case 'w':       //naar boven
+                    if(coords[1]>0){
+                        coords[1]--;
+                    }
+                    break;
+                case 's':       //naar onderen
+                    if(coords[1]<9){
+                        coords[1]++;
+                    }
+                    break;
+                case 'e':       //gebruik pickaxe
+                    grid[coords[0]][coords[1]].rocks-=2;
+                    grid[coords[0]-1][coords[1]].rocks--;
+                    grid[coords[0]][coords[1]-1].rocks--;
+                    grid[coords[0]+1][coords[1]].rocks--;
+                    grid[coords[0]][coords[1]+1].rocks--;
+                    drawGrid(grid);
+                    break;
+            }
+            drawSelect(coords);
+        }
+
+        return coords;
+    }
+
+    public void drawSelect(int[] coords){
+        SaxionApp.removeLastDraw();
+        SaxionApp.drawImage("Graphics/Crosshair.png", coords[0]*64, coords[1]*64, 64, 64);
     }
 
 }
