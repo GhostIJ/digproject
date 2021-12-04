@@ -1,4 +1,5 @@
 public class Mine {
-    int rocks = 0;
-    String minerals = "x";
+    int rocks;
+    String minerals;
+    boolean cleared;
 }
