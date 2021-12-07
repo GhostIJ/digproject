@@ -10,6 +10,8 @@ public class Application implements Runnable {
 
     int rows = 13+2;
     int column = 10+2;
+    int randomMinerals;
+    int clearedMinerals;
 
     public void run() {
         // Your code goes here!
@@ -45,6 +47,7 @@ public class Application implements Runnable {
 
         if (MenuChoice == '1') {    //New Game
             SaxionApp.resize(832, 640);
+            SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
             Mine[][] grid = createGrid();
             grid = addMineralsLvl1(grid);
             drawGrid(grid);
@@ -77,8 +80,8 @@ public class Application implements Runnable {
     }
 
     public Mine[][] addMineralsLvl1(Mine[][] grid){
-        int randomValue = SaxionApp.getRandomValueBetween(3,6); //Amount of materials
-        for(int x = 0; x < randomValue; x++){
+        randomMinerals = SaxionApp.getRandomValueBetween(3,6); //Amount of materials
+        for(int x = 0; x < randomMinerals; x++){
             int randomX = SaxionApp.getRandomValueBetween(1, rows-2);
             int randomY = SaxionApp.getRandomValueBetween(1, column-2);
             if(grid[randomX][randomY].minerals.equals("x") && grid[randomX+1][randomY].minerals.equals("x") && grid[randomX][randomY+1].minerals.equals("x") && grid[randomX+1][randomY+1].minerals.equals("x")){ //check if all of the spaces are empty
@@ -105,16 +108,13 @@ public class Application implements Runnable {
 
     public void drawGrid(Mine[][] grid){
         SaxionApp.clear();
-
-
-
         for(int row = 1; row < grid.length-1; row++){
             for(int col = 1; col < grid[row].length-1; col++){
 
-                if(grid[row][col].minerals == "Iron1"){
+                if(grid[row][col].minerals.equals("Iron1")){
                     SaxionApp.drawImage("Graphics/Steen6.png",(row-1)*64,(col-1)*64,128,128);
                 }
-                else if(grid[row][col].minerals == "Coal1"){
+                else if(grid[row][col].minerals.equals("Coal1")){
                     SaxionApp.drawImage("Graphics/Steen4.png",(row-1)*64,(col-1)*64,128,128);
                 }
 
@@ -137,7 +137,7 @@ public class Application implements Runnable {
                     SaxionApp.drawImage("Graphics/Steen1.png",(row-1)*64,(col-1)*64,64,64);
                 }
                 else if(grid[row][col].rocks <= 0){
-
+                    grid[row][col].cleared = true;
                 }
             }
         }
@@ -148,10 +148,9 @@ public class Application implements Runnable {
         coords[0] = (int)((rows/2)+0.5); //is 15/2 = 7.5+0.5 = 8-1 = 7
         coords[1] = (int)((column/2)+0.5)-1; //is 12/2 = 6+0.5 = 6.5-1 = 5.5(afgerond 5)
         SaxionApp.drawImage("Graphics/Crosshair.png", (coords[0]-1)*64, (coords[1]-1)*64, 64, 64);
-        boolean running = true;
         boolean pickaxe = true;
 
-        while(running){
+        while(!checkMinerals(grid)){
             char inputC = SaxionApp.readChar();
             switch (inputC){
                 case 'a':       //naar links
@@ -198,22 +197,36 @@ public class Application implements Runnable {
                     SaxionApp.drawImage("Graphics/Crosshair.png", (coords[0]-1)*64, (coords[1]-1)*64, 64, 64);
                     break;
                 case 'q':
-                    if(pickaxe){
-                        pickaxe = false;
-                    }
-                    else{
-                        pickaxe = true;
-                    }
+                    pickaxe = !pickaxe;
             }
             drawSelect(coords);
         }
-
         return coords;
     }
 
     public void drawSelect(int[] coords){
         SaxionApp.removeLastDraw();
         SaxionApp.drawImage("Graphics/Crosshair.png", (coords[0]-1)*64, (coords[1]-1)*64, 64, 64);
+    }
+
+    public boolean checkMinerals(Mine[][] grid){
+
+        clearedMinerals = 0;
+        for(int row = 1; row < grid.length-1; row++) {
+            for (int col = 1; col < grid[row].length - 1; col++) {
+                if(grid[row][col].minerals.equals("Coal1")){
+                    if(grid[row][col].cleared && grid[row+1][col].cleared && grid[row][col+1].cleared && grid[row+1][col+1].cleared){
+                        clearedMinerals++;
+                    }
+                }
+                else if(grid[row][col].minerals.equals("Iron1")){
+                    if(grid[row][col].cleared && grid[row+1][col].cleared && grid[row][col+1].cleared && grid[row+1][col+1].cleared){
+                        clearedMinerals++;
+                    }
+                }
+            }
+        }
+        return clearedMinerals == randomMinerals;
     }
 
 }
