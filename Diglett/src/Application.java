@@ -149,6 +149,7 @@ public class Application implements Runnable {
         coords[1] = (int)((column/2)+0.5)-1; //is 12/2 = 6+0.5 = 6.5-1 = 5.5(afgerond 5)
         SaxionApp.drawImage("Graphics/Crosshair.png", (coords[0]-1)*64, (coords[1]-1)*64, 64, 64);
         boolean running = true;
+        boolean pickaxe = true;
 
         while(running){
             char inputC = SaxionApp.readChar();
@@ -174,21 +175,42 @@ public class Application implements Runnable {
                     }
                     break;
                 case 'e':       //gebruik pickaxe
-                    grid[coords[0]][coords[1]].rocks-=2;
-                    grid[coords[0]-1][coords[1]].rocks--;
-                    grid[coords[0]][coords[1]-1].rocks--;
-                    grid[coords[0]+1][coords[1]].rocks--;
-                    grid[coords[0]][coords[1]+1].rocks--;
+                    if(pickaxe){
+                        grid[coords[0]][coords[1]].rocks-=2;
+                        grid[coords[0]-1][coords[1]].rocks--;
+                        grid[coords[0]][coords[1]-1].rocks--;
+                        grid[coords[0]+1][coords[1]].rocks--;
+                        grid[coords[0]][coords[1]+1].rocks--;
+                    }
+                    else{
+                        grid[coords[0]][coords[1]].rocks-=2;
+                        grid[coords[0]-1][coords[1]].rocks-=2;
+                        grid[coords[0]][coords[1]-1].rocks-=2;
+                        grid[coords[0]+1][coords[1]].rocks-=2;
+                        grid[coords[0]][coords[1]+1].rocks-=2;
+                        grid[coords[0]-1][coords[1]-1].rocks--;
+                        grid[coords[0]-1][coords[1]+1].rocks--;
+                        grid[coords[0]+1][coords[1]-1].rocks--;
+                        grid[coords[0]+1][coords[1]+1].rocks--;
+                    }
+
                     drawGrid(grid);
                     SaxionApp.drawImage("Graphics/Crosshair.png", (coords[0]-1)*64, (coords[1]-1)*64, 64, 64);
                     break;
+                case 'q':
+                    if(pickaxe){
+                        pickaxe = false;
+                    }
+                    else{
+                        pickaxe = true;
+                    }
             }
             drawSelect(coords);
         }
 
         return coords;
     }
-    
+
     public void drawSelect(int[] coords){
         SaxionApp.removeLastDraw();
         SaxionApp.drawImage("Graphics/Crosshair.png", (coords[0]-1)*64, (coords[1]-1)*64, 64, 64);
