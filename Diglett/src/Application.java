@@ -13,6 +13,7 @@ public class Application implements Runnable {
     int randomMinerals;
     int clearedMinerals;
 
+
     public void run() {
         // Your code goes here!
         MainMenu();
@@ -43,35 +44,67 @@ public class Application implements Runnable {
         SaxionApp.drawBorderedText("Jeroen Groen in't Woud",780, 475, 20);
 
         //menu functionaliteit
-        int MenuChoice = SaxionApp.readChar();
+        boolean menuRunning = true;
+        while (menuRunning){
+            int MenuChoice = SaxionApp.readChar();
 
-        if (MenuChoice == '1') {    //New Game
-            SaxionApp.resize(832, 640);
-            SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
-            Mine[][] grid = createGrid();
-            int level = 1;
-            grid = addMinerals(grid, level);
-            drawGrid(grid);
-            selectAndClick(grid);
+            if (MenuChoice == '1') {    //New Game
+                SaxionApp.resize(832, 640);
+                SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
+                int level = 1;
+                createLevel(level);
 
-        } else if (MenuChoice == '2') {     //Load game
-            SaxionApp.resize(832, 670);
+            } else if (MenuChoice == '2') {     //Load game
+                SaxionApp.resize(832, 670);
 
-        } else if (MenuChoice == '3') {     //Exit
-            SaxionApp.clear();
-            SaxionApp.drawBorderedText("Thank You for Playing", 125, 200, 75);
-            SaxionApp.drawBorderedText("We hope to see you again", 350, 275, 25);
+            } else if (MenuChoice == '3') {     //Exit
+                SaxionApp.clear();
+                SaxionApp.drawBorderedText("Thank You for Playing", 125, 200, 75);
+                SaxionApp.drawBorderedText("We hope to see you again", 350, 275, 25);
+                menuRunning = false;
+            }
         }
     }
 
-    public Mine[][] createGrid(){
+    public void createLevel(int level){
+        Mine[][] grid = createGrid(level);
+        grid = addMinerals(grid, level);
+        drawGrid(grid);
+        selectAndClick(grid);
+    }
+
+    public Mine[][] createGrid(int level){
         Mine[][] grid = new Mine[rows][column]; //create grid
 
         for(int row = 0; row < grid.length; row++){
             for(int col = 0; col < grid[row].length; col++){ //for loops to go through the grid and fill it
-
                 Mine newValue = new Mine();
-                newValue.rocks = (SaxionApp.getRandomValueBetween(1,4)*2); //set Rocks
+                int rock;
+
+                switch (level){ //set rocks based on level
+                    case 1:             //level 1
+                        rock = (SaxionApp.getRandomValueBetween(1,5));
+                        if(rock == 1){
+                            newValue.rocks = 1; //25%
+                        }
+                        else{
+                            newValue.rocks = 2; //75%
+                        }
+                        break;
+                    case 2:             //level 2
+                        rock = (SaxionApp.getRandomValueBetween(1,5));
+                        if(rock == 1){
+                            newValue.rocks = 1; //25%
+                        }
+                        else if(rock == 2 || rock == 3){
+                            newValue.rocks = 2; //50%
+                        }
+                        else {
+                            newValue.rocks = 3; //25%
+                        }
+                        break;
+                }
+
                 newValue.minerals = "x";
                 newValue.cleared = false;
                 grid[row][col] = newValue;
@@ -99,14 +132,24 @@ public class Application implements Runnable {
 
             switch (level){
                 case 1: //in procenten
-                    ironChance = 20;
-                    coalChance = 100;
+                    ironChance = 20; //20%
+                    coalChance = 100; //80%
                     break;
                 case 2: //in procenten
-                    copperChance = 10;
-                    ironChance = 40;
+                    copperChance = 10; //10%
+                    ironChance = 40; //30%
+                    coalChance = 100; //60%
+                    break;
+                case 3:
+                    tinChance = 8;
+                    copperChance = 32;
+                    ironChance = 64;
                     coalChance = 100;
                     break;
+                case 4:
+                    tinChance = 15;
+                    copperChance = 60;
+                    ironChance = 100;
             }
 
             if(grid[randomX][randomY].minerals.equals("x") && grid[randomX+1][randomY].minerals.equals("x") && grid[randomX][randomY+1].minerals.equals("x") && grid[randomX+1][randomY+1].minerals.equals("x")){ //check if all of the spaces are empty
@@ -117,43 +160,43 @@ public class Application implements Runnable {
                     grid[randomX][randomY+1].minerals = "Diamond3";
                     grid[randomX+1][randomY+1].minerals = "Diamond4";
                 }
-                else if(diamondChance > copperChance && randomMineral <= emeraldChance){
+                else if(randomMineral <= emeraldChance){
                     grid[randomX][randomY].minerals = "Emerald1";
                     grid[randomX+1][randomY].minerals = "Emerald2";
                     grid[randomX][randomY+1].minerals = "Emerald3";
                     grid[randomX+1][randomY+1].minerals = "Emerald4";
                 }
-                else if(randomMineral > emeraldChance && randomMineral <= rubyChance){
+                else if(randomMineral <= rubyChance){
                     grid[randomX][randomY].minerals = "Ruby1";
                     grid[randomX+1][randomY].minerals = "Ruby2";
                     grid[randomX][randomY+1].minerals = "Ruby3";
                     grid[randomX+1][randomY+1].minerals = "Ruby4";
                 }
-                else if(randomMineral > rubyChance && randomMineral <= sapphireChance){
+                else if(randomMineral <= sapphireChance){
                     grid[randomX][randomY].minerals = "Sapphire1";
                     grid[randomX+1][randomY].minerals = "Sapphire2";
                     grid[randomX][randomY+1].minerals = "Sapphire3";
                     grid[randomX+1][randomY+1].minerals = "Sapphire4";
                 }
-                else if(randomMineral > sapphireChance && randomMineral <= tinChance){
+                else if(randomMineral <= tinChance){
                     grid[randomX][randomY].minerals = "Tin1";
                     grid[randomX+1][randomY].minerals = "Tin2";
                     grid[randomX][randomY+1].minerals = "Tin3";
                     grid[randomX+1][randomY+1].minerals = "Tin4";
                 }
-                else if(randomMineral >tinChance && randomMineral <=copperChance){
+                else if(randomMineral <=copperChance){
                     grid[randomX][randomY].minerals = "Copper1";
                     grid[randomX+1][randomY].minerals = "Copper2";
                     grid[randomX][randomY+1].minerals = "Copper3";
                     grid[randomX+1][randomY+1].minerals = "Copper4";
                 }
-                else if(randomMineral > copperChance && randomMineral <= ironChance){
+                else if(randomMineral <= ironChance){
                     grid[randomX][randomY].minerals = "Iron1";
                     grid[randomX+1][randomY].minerals = "Iron2";
                     grid[randomX][randomY+1].minerals = "Iron3";
                     grid[randomX+1][randomY+1].minerals = "Iron4";
                 }
-                else if(randomMineral > ironChance && randomMineral <= coalChance){
+                else if(randomMineral <= coalChance){
                     grid[randomX][randomY].minerals = "Coal1";
                     grid[randomX+1][randomY].minerals = "Coal2";
                     grid[randomX][randomY+1].minerals = "Coal3";
@@ -275,19 +318,52 @@ public class Application implements Runnable {
         clearedMinerals = 0;
         for(int row = 1; row < grid.length-1; row++) {
             for (int col = 1; col < grid[row].length - 1; col++) {
-                if(grid[row][col].minerals.equals("Coal1")){
-                    if(grid[row][col].cleared && grid[row+1][col].cleared && grid[row][col+1].cleared && grid[row+1][col+1].cleared){
-                        clearedMinerals++;
-                    }
-                }
-                else if(grid[row][col].minerals.equals("Iron1")){
-                    if(grid[row][col].cleared && grid[row+1][col].cleared && grid[row][col+1].cleared && grid[row+1][col+1].cleared){
-                        clearedMinerals++;
-                    }
+
+                switch (grid[row][col].minerals) {
+                    case "Coal1":
+                        if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
+                            clearedMinerals++;
+
+                        }
+                        break;
+                    case "Iron1":
+                        if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
+                            clearedMinerals++;
+                        }
+                        break;
+                    case "Copper1":
+                        if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
+                            clearedMinerals++;
+                        }
+                        break;
+                    case "Tin1":
+                        if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
+                            clearedMinerals++;
+                        }
+                        break;
+                    case "Sapphire1":
+                        if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
+                            clearedMinerals++;
+                        }
+                        break;
+                    case "Ruby1":
+                        if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
+                            clearedMinerals++;
+                        }
+                        break;
+                    case "Emerald1":
+                        if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
+                            clearedMinerals++;
+                        }
+                        break;
+                    case "Diamond1":
+                        if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
+                            clearedMinerals++;
+                        }
+                        break;
                 }
             }
         }
         return clearedMinerals == randomMinerals;
     }
-
 }
