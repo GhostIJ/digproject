@@ -1,6 +1,7 @@
 import nl.saxion.app.SaxionApp;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public class Application implements Runnable {
 
@@ -12,7 +13,23 @@ public class Application implements Runnable {
     int column = 10+2;
     int randomMinerals;
     int clearedMinerals;
+    int[] newItems = new int[8]; //coal, iron, copper, tin, sapphire, ruby, emerald, diamond
 
+    int[] inventory = new int[24];
+    /*
+    coalget, coalused, (0 1)
+    ironoreget, ironoreused, (2 3)
+    copperoreget, copperoreused, (4 5)
+    tinoreget, tinoreused, (6 7)
+    sapphireget, sapphireused, (8 9)
+    rubyget, rubyused, (10 11)
+    emeraldget, emeraldused, (12 13)
+    diamondget, diamondused (14 15)
+    ironbarget, ironbarused, (16 17)
+    copperbarget, copperbarused, (18 19)
+    tinbarget, tinbarused, (20 21)
+    bronzebarget, bronzebarused, (22 23)
+    */
 
     public void run() {
         // Your code goes here!
@@ -20,35 +37,38 @@ public class Application implements Runnable {
     }
 
     public void MainMenu() {
-        SaxionApp.clear();
-        SaxionApp.resize(1000, 530); //Resize scherm voor main menu
 
-        //Achtergrond kleur, border uit en tekst kleur
-        SaxionApp.setBackgroundColor(SaxionApp.createColor(229, 190, 228));
-        SaxionApp.turnBorderOff();
-        SaxionApp.setFill(Color.WHITE);
-
-        //titel
-        SaxionApp.drawBorderedText("Titel", 50, 50, 100);
-
-        //keuzes in menu
-        SaxionApp.drawBorderedText("1. New Game", 50, 200, 25);
-        SaxionApp.drawBorderedText("2. Load Game", 50, 250, 25);
-        SaxionApp.drawBorderedText("3. Exit", 50, 300, 25);
-
-        //made by list
-        SaxionApp.drawBorderedText("Made By: ", 690, 400, 20);
-        SaxionApp.drawBorderedText("Anton Vorderman", 780, 400, 20);
-        SaxionApp.drawBorderedText("Ilse Jansen", 780, 425, 20);
-        SaxionApp.drawBorderedText("Sterre Liedewij", 780, 450, 20);
-        SaxionApp.drawBorderedText("Jeroen Groen in't Woud",780, 475, 20);
 
         //menu functionaliteit
         boolean menuRunning = true;
         while (menuRunning){
+            SaxionApp.clear();
+            SaxionApp.resize(1000, 530); //Resize scherm voor main menu
+
+            //Achtergrond kleur, border uit en tekst kleur
+            SaxionApp.setBackgroundColor(SaxionApp.createColor(229, 190, 228));
+            SaxionApp.turnBorderOff();
+            SaxionApp.setFill(Color.WHITE);
+
+            //titel
+            SaxionApp.drawBorderedText("Titel", 50, 50, 100);
+
+            //keuzes in menu
+            SaxionApp.drawBorderedText("1. New Game", 50, 200, 25);
+            SaxionApp.drawBorderedText("2. Load Game", 50, 250, 25);
+            SaxionApp.drawBorderedText("3. Exit", 50, 300, 25);
+
+            //made by list
+            SaxionApp.drawBorderedText("Made By: ", 690, 400, 20);
+            SaxionApp.drawBorderedText("Anton Vorderman", 780, 400, 20);
+            SaxionApp.drawBorderedText("Ilse Jansen", 780, 425, 20);
+            SaxionApp.drawBorderedText("Sterre Liedewij", 780, 450, 20);
+            SaxionApp.drawBorderedText("Jeroen Groen in't Woud",780, 475, 20);
+
             int MenuChoice = SaxionApp.readChar();
 
             if (MenuChoice == '1') {    //New Game
+                Arrays.fill(inventory, 0);
                 SaxionApp.resize(832, 640);
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 1;
@@ -71,6 +91,18 @@ public class Application implements Runnable {
         grid = addMinerals(grid, level);
         drawGrid(grid);
         selectAndClick(grid);
+
+        //voeg items toe aan inventory
+        for(int i = 0; i<newItems.length; i++){
+            inventory[(i*2)] =+ newItems[i];
+        }
+
+        /*
+        SaxionApp.clear();
+        for (int j : inventory) {
+            SaxionApp.printLine(j);
+        }
+        */
     }
 
     public Mine[][] createGrid(int level){
@@ -314,7 +346,7 @@ public class Application implements Runnable {
     }
 
     public boolean checkMinerals(Mine[][] grid){
-
+        Arrays.fill(newItems, 0);
         clearedMinerals = 0;
         for(int row = 1; row < grid.length-1; row++) {
             for (int col = 1; col < grid[row].length - 1; col++) {
@@ -323,42 +355,49 @@ public class Application implements Runnable {
                     case "Coal1":
                         if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
                             clearedMinerals++;
-
+                            newItems[0]++;
                         }
                         break;
                     case "Iron1":
                         if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
                             clearedMinerals++;
+                            newItems[1]++;
                         }
                         break;
                     case "Copper1":
                         if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
                             clearedMinerals++;
+                            newItems[2]++;
                         }
                         break;
                     case "Tin1":
                         if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
                             clearedMinerals++;
+                            newItems[3]++;
                         }
                         break;
                     case "Sapphire1":
                         if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
                             clearedMinerals++;
+                            newItems[4]++;
                         }
                         break;
                     case "Ruby1":
                         if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
                             clearedMinerals++;
+                            newItems[5]++;
                         }
                         break;
                     case "Emerald1":
                         if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
                             clearedMinerals++;
+                            newItems[6]++;
                         }
                         break;
                     case "Diamond1":
                         if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
                             clearedMinerals++;
+                            newItems[7]++;
                         }
                         break;
                 }
