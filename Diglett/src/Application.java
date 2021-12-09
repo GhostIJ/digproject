@@ -49,7 +49,8 @@ public class Application implements Runnable {
             SaxionApp.resize(832, 640);
             SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
             Mine[][] grid = createGrid();
-            grid = addMineralsLvl1(grid);
+            int level = 1;
+            grid = addMinerals(grid, level);
             drawGrid(grid);
             selectAndClick(grid);
 
@@ -79,20 +80,80 @@ public class Application implements Runnable {
         return grid;
     }
 
-    public Mine[][] addMineralsLvl1(Mine[][] grid){
+    public Mine[][] addMinerals(Mine[][] grid, int level){
+
         randomMinerals = SaxionApp.getRandomValueBetween(3,6); //Amount of materials
         for(int x = 0; x < randomMinerals; x++){
+
             int randomX = SaxionApp.getRandomValueBetween(1, rows-2);
-            int randomY = SaxionApp.getRandomValueBetween(1, column-2);
+            int randomY = SaxionApp.getRandomValueBetween(1, column-2); //locatie op de grid
+
+            int coalChance = 0;
+            int ironChance = 0;
+            int copperChance = 0;
+            int tinChance = 0;
+            int sapphireChance = 0;
+            int rubyChance = 0;
+            int emeraldChance = 0;
+            int diamondChance = 0;
+
+            switch (level){
+                case 1: //in procenten
+                    ironChance = 20;
+                    coalChance = 100;
+                    break;
+                case 2: //in procenten
+                    copperChance = 10;
+                    ironChance = 40;
+                    coalChance = 100;
+                    break;
+            }
+
             if(grid[randomX][randomY].minerals.equals("x") && grid[randomX+1][randomY].minerals.equals("x") && grid[randomX][randomY+1].minerals.equals("x") && grid[randomX+1][randomY+1].minerals.equals("x")){ //check if all of the spaces are empty
-                int randomMineral = SaxionApp.getRandomValueBetween(1, 11);
-                if(randomMineral <=3){
+                int randomMineral = SaxionApp.getRandomValueBetween(1, 101);
+                if(randomMineral <= diamondChance){
+                    grid[randomX][randomY].minerals = "Diamond1";
+                    grid[randomX+1][randomY].minerals = "Diamond2";
+                    grid[randomX][randomY+1].minerals = "Diamond3";
+                    grid[randomX+1][randomY+1].minerals = "Diamond4";
+                }
+                else if(diamondChance > copperChance && randomMineral <= emeraldChance){
+                    grid[randomX][randomY].minerals = "Emerald1";
+                    grid[randomX+1][randomY].minerals = "Emerald2";
+                    grid[randomX][randomY+1].minerals = "Emerald3";
+                    grid[randomX+1][randomY+1].minerals = "Emerald4";
+                }
+                else if(randomMineral > emeraldChance && randomMineral <= rubyChance){
+                    grid[randomX][randomY].minerals = "Ruby1";
+                    grid[randomX+1][randomY].minerals = "Ruby2";
+                    grid[randomX][randomY+1].minerals = "Ruby3";
+                    grid[randomX+1][randomY+1].minerals = "Ruby4";
+                }
+                else if(randomMineral > rubyChance && randomMineral <= sapphireChance){
+                    grid[randomX][randomY].minerals = "Sapphire1";
+                    grid[randomX+1][randomY].minerals = "Sapphire2";
+                    grid[randomX][randomY+1].minerals = "Sapphire3";
+                    grid[randomX+1][randomY+1].minerals = "Sapphire4";
+                }
+                else if(randomMineral > sapphireChance && randomMineral <= tinChance){
+                    grid[randomX][randomY].minerals = "Tin1";
+                    grid[randomX+1][randomY].minerals = "Tin2";
+                    grid[randomX][randomY+1].minerals = "Tin3";
+                    grid[randomX+1][randomY+1].minerals = "Tin4";
+                }
+                else if(randomMineral >tinChance && randomMineral <=copperChance){
+                    grid[randomX][randomY].minerals = "Copper1";
+                    grid[randomX+1][randomY].minerals = "Copper2";
+                    grid[randomX][randomY+1].minerals = "Copper3";
+                    grid[randomX+1][randomY+1].minerals = "Copper4";
+                }
+                else if(randomMineral > copperChance && randomMineral <= ironChance){
                     grid[randomX][randomY].minerals = "Iron1";
                     grid[randomX+1][randomY].minerals = "Iron2";
                     grid[randomX][randomY+1].minerals = "Iron3";
                     grid[randomX+1][randomY+1].minerals = "Iron4";
                 }
-                else {
+                else if(randomMineral > ironChance && randomMineral <= coalChance){
                     grid[randomX][randomY].minerals = "Coal1";
                     grid[randomX+1][randomY].minerals = "Coal2";
                     grid[randomX][randomY+1].minerals = "Coal3";
@@ -112,10 +173,10 @@ public class Application implements Runnable {
             for(int col = 1; col < grid[row].length-1; col++){
 
                 if(grid[row][col].minerals.equals("Iron1")){
-                    SaxionApp.drawImage("Graphics/Steen6.png",(row-1)*64,(col-1)*64,128,128);
+                    SaxionApp.drawImage("Graphics/IronOre.png",(row-1)*64,(col-1)*64,128,128);
                 }
                 else if(grid[row][col].minerals.equals("Coal1")){
-                    SaxionApp.drawImage("Graphics/Steen4.png",(row-1)*64,(col-1)*64,128,128);
+                    SaxionApp.drawImage("Graphics/Coal.png",(row-1)*64,(col-1)*64,128,128);
                 }
 
                 if(grid[row][col].rocks == 6){
