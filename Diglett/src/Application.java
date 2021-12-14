@@ -74,8 +74,9 @@ public class Application implements Runnable {
 
             if (MenuChoice == '1') {    //New Game
                 SaxionApp.clear();
-                SelectLevel();
                 Arrays.fill(inventory, 0);
+                SelectLevel();
+
 
             } else if (MenuChoice == '2') {     //Load game
                 SaxionApp.resize(832, 670);
@@ -90,49 +91,51 @@ public class Application implements Runnable {
     }
 
     public void SelectLevel() {
-        SaxionApp.resize(1000, 530); //Resize scherm voor Level select
-
-        //achtergrond kleur en tekst kleur
-        SaxionApp.setBackgroundColor(background);
-        SaxionApp.setBorderSize(4);
-        SaxionApp.setBorderColor(Color.white);
-        SaxionApp.setFill(background);
-
-        //randen rondom boxes
-        SaxionApp.drawRectangle(165, 50, 650, 100);
-        SaxionApp.drawRectangle(165, 175, 125,125);
-        SaxionApp.drawRectangle(340, 175, 125, 125);
-        SaxionApp.drawRectangle(515, 175, 125, 125);
-        SaxionApp.drawRectangle(690, 175, 125, 125);
-        SaxionApp.drawRectangle(5, 475 , 165, 50);
-        SaxionApp.drawRectangle(165, 325, 125 , 125);
-        SaxionApp.drawRectangle(340, 325, 125, 125);
-        SaxionApp.drawRectangle(515, 325, 125, 125);
-        SaxionApp.drawRectangle(690, 325, 125, 125);
-        //SaxionApp.drawRectangle(840, 475, 155, 50);
-
-
-        //design tekst
-        SaxionApp.turnBorderOff();
-        SaxionApp.setFill(Color.white);
-
-        //tekst in boxes
-        SaxionApp.drawBorderedText("Select Mine", 215, 60, 100);
-        SaxionApp.drawBorderedText("1" , 192, 185, 130);
-        SaxionApp.drawBorderedText("2", 367, 185, 130);
-        SaxionApp.drawBorderedText("3" , 542, 185, 130);
-        SaxionApp.drawBorderedText("4", 717, 185, 130);
-        SaxionApp.drawBorderedText("5", 192, 335, 130);
-        SaxionApp.drawBorderedText("6", 367, 335, 130);
-        SaxionApp.drawBorderedText("7", 542, 335, 130);
-        SaxionApp.drawBorderedText("8", 717, 335, 130);
-        // SaxionApp.drawBorderedText("9.Next", 845, 480, 50);
-        SaxionApp.drawBorderedText("0.Back", 10, 480, 50);
-
 
         //Select level functionaliteit
         boolean SelectLevelRunning = true;
         while (SelectLevelRunning) {
+            SaxionApp.clear();
+
+            SaxionApp.resize(1000, 530); //Resize scherm voor Level select
+
+            //achtergrond kleur en tekst kleur
+            SaxionApp.setBackgroundColor(background);
+            SaxionApp.setBorderSize(4);
+            SaxionApp.setBorderColor(Color.white);
+            SaxionApp.setFill(background);
+
+            //randen rondom boxes
+            SaxionApp.drawRectangle(165, 50, 650, 100);
+            SaxionApp.drawRectangle(165, 175, 125,125);
+            SaxionApp.drawRectangle(340, 175, 125, 125);
+            SaxionApp.drawRectangle(515, 175, 125, 125);
+            SaxionApp.drawRectangle(690, 175, 125, 125);
+            SaxionApp.drawRectangle(5, 475 , 165, 50);
+            SaxionApp.drawRectangle(165, 325, 125 , 125);
+            SaxionApp.drawRectangle(340, 325, 125, 125);
+            SaxionApp.drawRectangle(515, 325, 125, 125);
+            SaxionApp.drawRectangle(690, 325, 125, 125);
+            //SaxionApp.drawRectangle(840, 475, 155, 50);
+
+            //design tekst
+            SaxionApp.turnBorderOff();
+            SaxionApp.setFill(Color.white);
+
+            //tekst in boxes
+            SaxionApp.drawBorderedText("Select Mine", 215, 60, 100);
+            SaxionApp.drawBorderedText("1" , 192, 185, 130);
+            SaxionApp.drawBorderedText("2", 367, 185, 130);
+            SaxionApp.drawBorderedText("3" , 542, 185, 130);
+            SaxionApp.drawBorderedText("4", 717, 185, 130);
+            SaxionApp.drawBorderedText("5", 192, 335, 130);
+            SaxionApp.drawBorderedText("6", 367, 335, 130);
+            SaxionApp.drawBorderedText("7", 542, 335, 130);
+            SaxionApp.drawBorderedText("8", 717, 335, 130);
+            // SaxionApp.drawBorderedText("9.Next", 845, 480, 50);
+            SaxionApp.drawBorderedText("0.Back", 10, 480, 50);
+
+
             int Levelchoice = SaxionApp.readChar();
 
             if (Levelchoice == '1') { //mine 1
@@ -182,9 +185,6 @@ public class Application implements Runnable {
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 8;
                 createLevel(level);
-
-            } else if (Levelchoice == '9') {
-
 
             } else if (Levelchoice == '0') {
                 SelectLevelRunning = false;
@@ -544,7 +544,7 @@ public class Application implements Runnable {
                 }
             }
             if(saveFile != 0){
-                String filename = "Savefile"+saveFile+".txt";
+                String filename = "Savefile"+saveFile+".csv";
                 try {
                     File Save = new File(filename);
                     if(Save.createNewFile()) {
@@ -575,6 +575,35 @@ public class Application implements Runnable {
                     else {
                         SaxionApp.printLine();
                         SaxionApp.printLine("Save file is already in use");
+                        SaxionApp.printLine("Do you want to overwrite the file? (y/n)");
+                        if(SaxionApp.readChar() == 'y'){
+                            try {
+                                FileWriter SaveWrite = new FileWriter(filename);
+                                StringBuilder toWrite = new StringBuilder();
+                                for(int i = 0; i < inventory.length; i++){
+                                    if(i == inventory.length-1){
+                                        toWrite.append(inventory[i]);
+                                    }
+                                    else {
+                                        toWrite.append(inventory[i]).append(",");
+                                    }
+                                }
+                                SaveWrite.write(String.valueOf(toWrite));
+                                SaveWrite.close();
+                            }
+                            catch (IOException f){
+                                SaxionApp.printLine();
+                                SaxionApp.printLine("An error occured while trying to save your data");
+                                f.printStackTrace();
+                            }
+
+                            SaxionApp.printLine();
+                            SaxionApp.printLine("Data saved to save file \""+saveFile+"\"");
+                            savingData = false;
+                        }
+                        else{
+                            SaxionApp.printLine("Data wasn't saved");
+                        }
                     }
                 }
                 catch (IOException e) {
@@ -585,6 +614,7 @@ public class Application implements Runnable {
 
             }
         }
-
+        SaxionApp.printLine("Press any key to continue");
+        SaxionApp.readChar();
     }
 }
