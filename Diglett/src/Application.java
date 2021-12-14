@@ -2,6 +2,9 @@ import nl.saxion.app.SaxionApp;
 
 import java.awt.*;
 import java.util.Arrays;
+import java.io.File; //File class to create new files
+import java.io.FileWriter; //FileWriter class to write to files
+import java.io.IOException; //IOException class to handle errors
 
 public class Application implements Runnable {
 
@@ -191,6 +194,8 @@ public class Application implements Runnable {
     }
 
     public void createLevel(int level){
+
+        //Play level
         Mine[][] grid = createGrid(level);
         grid = addMinerals(grid, level);
         drawGrid(grid);
@@ -198,8 +203,9 @@ public class Application implements Runnable {
 
         //voeg items toe aan inventory
         for(int i = 0; i<newItems.length; i++){
-            inventory[(i*2)] =+ newItems[i];
+            inventory[(i*2)] = inventory[(i*2)] + newItems[i];
         }
+        saveToFile();
 
         /*
         SaxionApp.clear();
@@ -217,28 +223,25 @@ public class Application implements Runnable {
                 Mine newValue = new Mine();
                 int rock;
 
-                switch (level){ //set rocks based on level
-                    case 1:             //level 1
-                        rock = (SaxionApp.getRandomValueBetween(1,5));
-                        if(rock == 1){
+                switch (level) { //set rocks based on level
+                    case 1 -> {             //level 1
+                        rock = (SaxionApp.getRandomValueBetween(1, 5));
+                        if (rock == 1) {
                             newValue.rocks = 1; //25%
-                        }
-                        else{
+                        } else {
                             newValue.rocks = 2; //75%
                         }
-                        break;
-                    case 2:             //level 2
-                        rock = (SaxionApp.getRandomValueBetween(1,5));
-                        if(rock == 1){
+                    }
+                    case 2 -> {             //level 2
+                        rock = (SaxionApp.getRandomValueBetween(1, 5));
+                        if (rock == 1) {
                             newValue.rocks = 1; //25%
-                        }
-                        else if(rock == 2 || rock == 3){
+                        } else if (rock == 2 || rock == 3) {
                             newValue.rocks = 2; //50%
-                        }
-                        else {
+                        } else {
                             newValue.rocks = 3; //25%
                         }
-                        break;
+                    }
                 }
 
                 newValue.minerals = "x";
@@ -266,26 +269,27 @@ public class Application implements Runnable {
             int emeraldChance = 0;
             int diamondChance = 0;
 
-            switch (level){
-                case 1: //in procenten
+            switch (level) {
+                case 1 -> { //in procenten
                     ironChance = 20; //20%
                     coalChance = 100; //80%
-                    break;
-                case 2: //in procenten
+                }
+                case 2 -> { //in procenten
                     copperChance = 10; //10%
                     ironChance = 40; //30%
                     coalChance = 100; //60%
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     tinChance = 8;
                     copperChance = 32;
                     ironChance = 64;
                     coalChance = 100;
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     tinChance = 15;
                     copperChance = 60;
                     ironChance = 100;
+                }
             }
 
             if(grid[randomX][randomY].minerals.equals("x") && grid[randomX+1][randomY].minerals.equals("x") && grid[randomX][randomY+1].minerals.equals("x") && grid[randomX+1][randomY+1].minerals.equals("x")){ //check if all of the spaces are empty
@@ -383,7 +387,7 @@ public class Application implements Runnable {
         }
     }
 
-    public int[] selectAndClick(Mine[][] grid){
+    public void selectAndClick(Mine[][] grid){
         int[] coords = new int[2];
         coords[0] = (int)((rows/2)+0.5); //is 15/2 = 7.5+0.5 = 8-1 = 7
         coords[1] = (int)((column/2)+0.5)-1; //is 12/2 = 6+0.5 = 6.5-1 = 5.5(afgerond 5)
@@ -441,7 +445,6 @@ public class Application implements Runnable {
             }
             drawSelect(coords);
         }
-        return coords;
     }
 
     public void drawSelect(int[] coords){
@@ -508,5 +511,80 @@ public class Application implements Runnable {
             }
         }
         return clearedMinerals == randomMinerals;
+    }
+
+    public void saveToFile(){
+
+        SaxionApp.clear();
+
+        boolean savingData = true;
+        while (savingData){
+            int saveFile = 0;
+            boolean saving = true;
+            while (saving){
+                SaxionApp.printLine("Which file do you want to save in?(1,2 or 3. Press E to exit)");
+                switch (SaxionApp.readChar()) {
+                    case '1' -> {
+                        saveFile = 1;
+                        saving = false;
+                    }
+                    case '2' -> {
+                        saveFile = 2;
+                        saving = false;
+                    }
+                    case '3' -> {
+                        saveFile = 3;
+                        saving = false;
+                    }
+                    case 'e' -> {
+                        saving = false;
+                        savingData = false;
+                    }
+                    default -> SaxionApp.printLine("Please choose 1, 2, 3 or E");
+                }
+            }
+            if(saveFile != 0){
+                String filename = "Savefile"+saveFile+".txt";
+                try {
+                    File Save = new File(filename);
+                    if(Save.createNewFile()) {
+                        try {
+                            FileWriter SaveWrite = new FileWriter(filename);
+                            StringBuilder toWrite = new StringBuilder();
+                            for(int i = 0; i < inventory.length; i++){
+                                if(i == inventory.length-1){
+                                    toWrite.append(inventory[i]);
+                                }
+                                else {
+                                    toWrite.append(inventory[i]).append(",");
+                                }
+                            }
+                            SaveWrite.write(String.valueOf(toWrite));
+                            SaveWrite.close();
+                        }
+                        catch (IOException f){
+                            SaxionApp.printLine();
+                            SaxionApp.printLine("An error occured while trying to save your data");
+                            f.printStackTrace();
+                        }
+
+                        SaxionApp.printLine();
+                        SaxionApp.printLine("Data saved to save file \""+saveFile+"\"");
+                        savingData = false;
+                    }
+                    else {
+                        SaxionApp.printLine();
+                        SaxionApp.printLine("Save file is already in use");
+                    }
+                }
+                catch (IOException e) {
+                    SaxionApp.printLine();
+                    SaxionApp.printLine("An error occured while creating the file.");
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
     }
 }
