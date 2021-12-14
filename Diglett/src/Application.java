@@ -185,7 +185,6 @@ public class Application implements Runnable {
 
             } else if (Levelchoice == '0') {
                 SelectLevelRunning = false;
-                MainMenu();
             }
         }
 
