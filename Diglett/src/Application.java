@@ -650,17 +650,24 @@ public class Application implements Runnable {
                 }
             }
             if(fileNumber != 0){
+
                 String filename = "Savefile"+fileNumber+".csv";
-                CsvReader readFile = new CsvReader(filename);
-                readFile.setSeparator(',');
-                readFile.loadRow();
-                for(int i = 0; i<inventory.length; i++){
-                    inventory[i] = readFile.getInt(i);
+                File tempFile = new File(filename);
+                if(tempFile.exists()){
+                    CsvReader readFile = new CsvReader(filename);
+                    readFile.setSeparator(',');
+                    readFile.loadRow();
+                    for(int i = 0; i<inventory.length; i++){
+                        inventory[i] = readFile.getInt(i);
+                    }
+                    loadingData = false;
+                    SaxionApp.printLine("File loaded successfully!");
+                    SaxionApp.pause();
                 }
-                loadingData = false;
+                else {
+                    SaxionApp.printLine("There wasn't a file loaded in slot "+fileNumber);
+                }
             }
         }
-        SaxionApp.printLine("Current amount of coal is: "+inventory[0]);
-        SaxionApp.pause();
     }
 }
