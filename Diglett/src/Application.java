@@ -244,6 +244,72 @@ public class Application implements Runnable {
                             newValue.rocks = 3; //25%
                         }
                     }
+                    case 3 -> {
+                        rock = (SaxionApp.getRandomValueBetween(1, 11));
+                        if (rock == 1) {
+                            newValue.rocks = 1; //10%
+                        } else if (rock >= 2 && rock < 5) {
+                            newValue.rocks = 2; //30%
+                        } else if (rock >= 5 && rock < 9) {
+                            newValue.rocks = 3; //40%
+                        } else {
+                            newValue.rocks = 4; //20%
+                        }
+                    }
+                    case 4 -> {
+                        rock = (SaxionApp.getRandomValueBetween(1, 11));
+                        if (rock == 1 || rock == 2) {
+                            newValue.rocks = 2; //20%
+                        } else if (rock >= 3 && rock < 6) {
+                            newValue.rocks = 3; //30%
+                        } else {
+                            newValue.rocks = 4; //50%
+                        }
+                    }
+                    case 5 -> {
+                        rock = (SaxionApp.getRandomValueBetween(1, 101));
+                        if (rock >= 1 && rock < 11) {
+                            newValue.rocks = 2; //10%
+                        } else if (rock >= 11 && rock < 31) {
+                            newValue.rocks = 3; //20%
+                        } else if (rock >= 31 && rock < 76) {
+                            newValue.rocks = 4; //45%
+                        } else {
+                            newValue.rocks = 5; //25%
+                        }
+                    }
+                    case 6 -> {
+                        rock = (SaxionApp.getRandomValueBetween(1, 101));
+                        if (rock >= 1 && rock < 26) {
+                            newValue.rocks = 3; //25%
+                        } else if (rock >= 26 && rock < 66) {
+                            newValue.rocks = 4; //40%
+                        } else {
+                            newValue.rocks = 5; //35%
+                        }
+                    }
+                    case 7 -> {
+                        rock = (SaxionApp.getRandomValueBetween(1, 101));
+                        if (rock >= 1 && rock < 11) {
+                            newValue.rocks = 3; //10%
+                        } else if (rock >= 11 && rock < 36) {
+                            newValue.rocks = 4; //25%
+                        } else if (rock >= 36 && rock < 71) {
+                            newValue.rocks = 5; //35%
+                        } else {
+                            newValue.rocks = 6; //30%
+                        }
+                    }
+                    case 8 -> {
+                        rock = (SaxionApp.getRandomValueBetween(1, 11));
+                        if (rock == 1) {
+                            newValue.rocks = 4; //10%
+                        } else if (rock == 2 || rock == 3) {
+                            newValue.rocks = 5; //20%
+                        } else {
+                            newValue.rocks = 6; //70%
+                        }
+                    }
                 }
 
                 newValue.minerals = "x";
@@ -282,15 +348,39 @@ public class Application implements Runnable {
                     coalChance = 100; //60%
                 }
                 case 3 -> {
-                    tinChance = 8;
-                    copperChance = 32;
-                    ironChance = 64;
-                    coalChance = 100;
+                    tinChance = 8; //8%
+                    copperChance = 32; //24%
+                    ironChance = 64; //32%
+                    coalChance = 100; //36%
                 }
                 case 4 -> {
-                    tinChance = 15;
-                    copperChance = 60;
-                    ironChance = 100;
+                    tinChance = 15; //15%
+                    copperChance = 60; //45%
+                    ironChance = 100; //40%
+                }
+                case 5 -> {
+                    sapphireChance = 8; //8%
+                    tinChance = 43; //35%
+                    copperChance = 73; //30%
+                    ironChance = 100; //27%
+                }
+                case 6 -> {
+                    rubyChance = 6; //6%
+                    sapphireChance = 24; //18%
+                    tinChance = 59; //35%
+                    copperChance = 100; //31%
+                }
+                case 7 -> {
+                    emeraldChance = 5; //5%
+                    rubyChance = 21; //16%
+                    copperChance = 45; //24%
+                    ironChance = 100; //55%
+                }
+                case 8 -> {
+                    diamondChance = 3; //3%
+                    emeraldChance = 15; //12%
+                    tinChance = 45; //30%
+                    coalChance = 100; //55%
                 }
             }
 
@@ -362,6 +452,9 @@ public class Application implements Runnable {
                 }
                 else if(grid[row][col].minerals.equals("Coal1")){
                     SaxionApp.drawImage("Graphics/Coal.png",(row-1)*64,(col-1)*64,128,128);
+                }
+                else if(grid[row][col].minerals.equals("Diamond1")){
+                    SaxionApp.drawImage("Graphics/Diamond.png",(row-1)*64,(col-1)*64,128,128);
                 }
 
                 if(grid[row][col].rocks == 6){
