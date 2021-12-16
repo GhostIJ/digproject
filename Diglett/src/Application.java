@@ -1,3 +1,4 @@
+import nl.saxion.app.CsvReader;
 import nl.saxion.app.SaxionApp;
 
 import java.awt.*;
@@ -80,6 +81,7 @@ public class Application implements Runnable {
 
             } else if (MenuChoice == '2') {     //Load game
                 SaxionApp.resize(832, 670);
+                loadFromFile();
 
             } else if (MenuChoice == '3') {     //Exit
                 SaxionApp.clear();
@@ -519,21 +521,21 @@ public class Application implements Runnable {
 
         boolean savingData = true;
         while (savingData){
-            int saveFile = 0;
+            int fileNumber = 0;
             boolean saving = true;
             while (saving){
                 SaxionApp.printLine("Which file do you want to save in?(1,2 or 3. Press E to exit)");
                 switch (SaxionApp.readChar()) {
                     case '1' -> {
-                        saveFile = 1;
+                        fileNumber = 1;
                         saving = false;
                     }
                     case '2' -> {
-                        saveFile = 2;
+                        fileNumber = 2;
                         saving = false;
                     }
                     case '3' -> {
-                        saveFile = 3;
+                        fileNumber = 3;
                         saving = false;
                     }
                     case 'e' -> {
@@ -543,11 +545,11 @@ public class Application implements Runnable {
                     default -> SaxionApp.printLine("Please choose 1, 2, 3 or E");
                 }
             }
-            if(saveFile != 0){
-                String filename = "Savefile"+saveFile+".csv";
+            if(fileNumber != 0){
+                String filename = "Savefile"+fileNumber+".csv";
                 try {
                     File Save = new File(filename);
-                    if(Save.createNewFile()) {
+                    if(Save.createNewFile()) { //wanneer er nog geen save bestand was
                         try {
                             FileWriter SaveWrite = new FileWriter(filename);
                             StringBuilder toWrite = new StringBuilder();
@@ -569,10 +571,10 @@ public class Application implements Runnable {
                         }
 
                         SaxionApp.printLine();
-                        SaxionApp.printLine("Data saved to save file \""+saveFile+"\"");
+                        SaxionApp.printLine("Data saved to save file \""+fileNumber+"\"");
                         savingData = false;
                     }
-                    else {
+                    else { //wanneer er al een save bestand bestaat
                         SaxionApp.printLine();
                         SaxionApp.printLine("Save file is already in use");
                         SaxionApp.printLine("Do you want to overwrite the file? (y/n)");
@@ -598,7 +600,7 @@ public class Application implements Runnable {
                             }
 
                             SaxionApp.printLine();
-                            SaxionApp.printLine("Data saved to save file \""+saveFile+"\"");
+                            SaxionApp.printLine("Data saved to save file \""+fileNumber+"\"");
                             savingData = false;
                         }
                         else{
@@ -611,10 +613,54 @@ public class Application implements Runnable {
                     SaxionApp.printLine("An error occured while creating the file.");
                     e.printStackTrace();
                 }
-
             }
         }
         SaxionApp.printLine("Press any key to continue");
         SaxionApp.readChar();
+    }
+
+    public void loadFromFile(){
+
+        SaxionApp.clear();
+
+        int fileNumber = 0;
+        boolean loadingData = true;
+        while(loadingData){
+            boolean loading = true;
+            while(loading){
+                SaxionApp.printLine("Which file do you want to load from?(1,2 or 3. Press E to exit)");
+                switch (SaxionApp.readChar()){
+                    case '1' -> {
+                        fileNumber = 1;
+                        loading = false;
+                    }
+                    case '2' -> {
+                        fileNumber = 2;
+                        loading = false;
+                    }
+                    case '3' -> {
+                        fileNumber = 3;
+                        loading = false;
+                    }
+                    case 'e' -> {
+                        loading = false;
+                        loadingData = false;
+                    }
+                    default -> SaxionApp.printLine("Please choose 1, 2, 3 or E");
+                }
+            }
+            if(fileNumber != 0){
+                String filename = "Savefile"+fileNumber+".csv";
+                CsvReader readFile = new CsvReader(filename);
+                readFile.setSeparator(',');
+                readFile.loadRow();
+                for(int i = 0; i<inventory.length; i++){
+                    inventory[i] = readFile.getInt(i);
+                }
+                loadingData = false;
+            }
+        }
+        SaxionApp.printLine("Current amount of coal is: "+inventory[0]);
+        SaxionApp.pause();
     }
 }
