@@ -456,6 +456,12 @@ public class Application implements Runnable {
                 else if(grid[row][col].minerals.equals("Diamond1")){
                     SaxionApp.drawImage("Graphics/Diamond.png",(row-1)*64,(col-1)*64,128,128);
                 }
+                else if(grid[row][col].minerals.equals("Copper1")){
+                    SaxionApp.drawImage("Graphics/CopperOre.png",(row-1)*64,(col-1)*64,128,128);
+                }
+                else if(grid[row][col].minerals.equals("Tin1")){
+                    SaxionApp.drawImage("Graphics/TinOre.png",(row-1)*64,(col-1)*64,128,128);
+                }
 
                 if(grid[row][col].rocks == 6){
                     SaxionApp.drawImage("Graphics/Steen6.png",(row-1)*64,(col-1)*64,64,64);
