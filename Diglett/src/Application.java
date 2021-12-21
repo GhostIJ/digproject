@@ -19,6 +19,7 @@ public class Application implements Runnable {
     int clearedMinerals;
     int[] newItems = new int[8]; //coal, iron, copper, tin, sapphire, ruby, emerald, diamond
     Color background = SaxionApp.createColor(212, 136, 198);
+    boolean runAfterLoadSave = true;
 
     int[] inventory = new int[24];
     /*
@@ -80,8 +81,11 @@ public class Application implements Runnable {
 
 
             } else if (MenuChoice == '2') {     //Load game
-                SaxionApp.resize(832, 670);
-                loadFromFile();
+                drawLoadSave(true);
+                if(runAfterLoadSave){
+                    SelectLevel();
+                }
+                
 
             } else if (MenuChoice == '3') {     //Exit
                 SaxionApp.clear();
@@ -623,7 +627,7 @@ public class Application implements Runnable {
         return clearedMinerals == randomMinerals;
     }
 
-    public void saveToFile(){
+    public boolean saveToFile(){
 
         SaxionApp.clear();
 
@@ -675,11 +679,15 @@ public class Application implements Runnable {
                         catch (IOException f){
                             SaxionApp.printLine();
                             SaxionApp.printLine("An error occured while trying to save your data");
+                            SaxionApp.pause();
+                            SaxionApp.removeLastPrint();
                             f.printStackTrace();
                         }
 
                         SaxionApp.printLine();
                         SaxionApp.printLine("Data saved to save file \""+fileNumber+"\"");
+                        SaxionApp.pause();
+                        SaxionApp.removeLastPrint();
                         savingData = false;
                     }
                     else { //wanneer er al een save bestand bestaat
@@ -704,39 +712,90 @@ public class Application implements Runnable {
                             catch (IOException f){
                                 SaxionApp.printLine();
                                 SaxionApp.printLine("An error occured while trying to save your data");
+                                SaxionApp.pause();
+                                SaxionApp.removeLastPrint();
                                 f.printStackTrace();
                             }
 
                             SaxionApp.printLine();
                             SaxionApp.printLine("Data saved to save file \""+fileNumber+"\"");
+                            SaxionApp.pause();
+                            SaxionApp.removeLastPrint();
                             savingData = false;
                         }
                         else{
                             SaxionApp.printLine("Data wasn't saved");
+                            SaxionApp.pause();
+                            SaxionApp.removeLastPrint();
                         }
                     }
                 }
                 catch (IOException e) {
                     SaxionApp.printLine();
                     SaxionApp.printLine("An error occured while creating the file.");
+                    SaxionApp.pause();
+                    SaxionApp.removeLastPrint();
                     e.printStackTrace();
                 }
             }
         }
         SaxionApp.printLine("Press any key to continue");
         SaxionApp.readChar();
+        return false;
     }
 
-    public void loadFromFile(){
+    public void drawLoadSave(boolean isLoad){
+        boolean selectLoadSave = true;
+        while (selectLoadSave){
+            SaxionApp.clear();
+            SaxionApp.resize(1000, 530); //Resize scherm voor Load/Save
 
-        SaxionApp.clear();
+            //achtergrond kleur en tekst kleur
+            SaxionApp.setBackgroundColor(background);
+            SaxionApp.setBorderSize(4);
+            SaxionApp.setBorderColor(Color.white);
+            SaxionApp.setFill(background);
 
+            SaxionApp.drawRectangle(165, 50, 650, 100);
+            SaxionApp.drawRectangle(165, 200, 200, 200);
+            SaxionApp.drawRectangle(390, 200, 200, 200);
+            SaxionApp.drawRectangle(615, 200, 200, 200);
+            SaxionApp.drawRectangle(5, 475 , 165, 50);
+
+            //25 er tussen, 200 breed
+
+            //design tekst
+            SaxionApp.turnBorderOff();
+            SaxionApp.setFill(Color.white);
+
+            //tekst in boxes
+            if(isLoad){
+                SaxionApp.drawBorderedText("Load File", 275, 60, 100);
+            }
+            else {
+                SaxionApp.drawBorderedText("Save File", 275, 60, 100);
+            }
+
+            SaxionApp.drawBorderedText("1", 215, 230, 175);
+            SaxionApp.drawBorderedText("2", 440, 230, 175);
+            SaxionApp.drawBorderedText("3", 665, 230, 175);
+            SaxionApp.drawBorderedText("0.Back", 10, 480, 50);
+
+            if(isLoad){
+                selectLoadSave = loadFromFile();
+            }
+            else {
+                selectLoadSave = saveToFile();
+            }
+        }
+    }
+
+    public boolean loadFromFile(){
         int fileNumber = 0;
         boolean loadingData = true;
         while(loadingData){
             boolean loading = true;
             while(loading){
-                SaxionApp.printLine("Which file do you want to load from?(1,2 or 3. Press E to exit)");
                 switch (SaxionApp.readChar()){
                     case '1' -> {
                         fileNumber = 1;
@@ -750,11 +809,17 @@ public class Application implements Runnable {
                         fileNumber = 3;
                         loading = false;
                     }
-                    case 'e' -> {
+                    case '0' -> {
                         loading = false;
                         loadingData = false;
+                        runAfterLoadSave = false;
                     }
-                    default -> SaxionApp.printLine("Please choose 1, 2, 3 or E");
+                    default -> {
+                        SaxionApp.printLine("Please try again.");
+                        SaxionApp.pause();
+                        SaxionApp.removeLastPrint();
+                    }
+
                 }
             }
             if(fileNumber != 0){
@@ -774,8 +839,12 @@ public class Application implements Runnable {
                 }
                 else {
                     SaxionApp.printLine("There wasn't a file loaded in slot "+fileNumber);
+                    SaxionApp.pause();
+                    SaxionApp.removeLastPrint();
                 }
             }
         }
+        return false;
     }
+
 }
