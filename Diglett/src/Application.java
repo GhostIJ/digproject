@@ -144,49 +144,49 @@ public class Application implements Runnable {
             int Levelchoice = SaxionApp.readChar();
 
             if (Levelchoice == '1') { //mine 1
-                SaxionApp.resize(832, 640);
+                SaxionApp.resize(832, 680);
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 1;
                 createLevel(level);
 
             } else if (Levelchoice == '2') { //mine 2
-                SaxionApp.resize(832, 640);
+                SaxionApp.resize(832, 680);
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 2;
                 createLevel(level);
 
             } else if (Levelchoice == '3') { // mine 3
-                SaxionApp.resize(832, 640);
+                SaxionApp.resize(832, 680);
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 3;
                 createLevel(level);
 
             } else if (Levelchoice == '4') { // mine 4
-                SaxionApp.resize(832, 640);
+                SaxionApp.resize(832, 680);
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 4;
                 createLevel(level);
 
             } else if (Levelchoice == '5') { // mine 5
-                SaxionApp.resize(832, 640);
+                SaxionApp.resize(832, 680);
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 5;
                 createLevel(level);
 
             } else if (Levelchoice == '6') { // mine 6
-                SaxionApp.resize(832, 640);
+                SaxionApp.resize(832, 680);
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 6;
                 createLevel(level);
 
             } else if (Levelchoice == '7') { // mine 7
-                SaxionApp.resize(832, 640);
+                SaxionApp.resize(832, 680);
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 7;
                 createLevel(level);
 
             } else if (Levelchoice == '8') { // mine 8
-                SaxionApp.resize(832, 640);
+                SaxionApp.resize(832, 680);
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 8;
                 createLevel(level);
@@ -498,66 +498,74 @@ public class Application implements Runnable {
                 }
             }
         }
+        DrawLoadingbalk();
     }
 
-    public void selectAndClick(Mine[][] grid){
+    public void selectAndClick(Mine[][] grid) {
         int[] coords = new int[2];
-        coords[0] = (int)((rows/2)+0.5); //is 15/2 = 7.5+0.5 = 8-1 = 7
-        coords[1] = (int)((column/2)+0.5)-1; //is 12/2 = 6+0.5 = 6.5-1 = 5.5(afgerond 5)
-        SaxionApp.drawImage("Graphics/Crosshair.png", (coords[0]-1)*64, (coords[1]-1)*64, 64, 64);
+        coords[0] = (int) ((rows / 2) + 0.5); //is 15/2 = 7.5+0.5 = 8-1 = 7
+        coords[1] = (int) ((column / 2) + 0.5) - 1; //is 12/2 = 6+0.5 = 6.5-1 = 5.5(afgerond 5)
+        SaxionApp.drawImage("Graphics/Crosshair.png", (coords[0] - 1) * 64, (coords[1] - 1) * 64, 64, 64);
         boolean pickaxe = true;
+        int Mined = 1;
 
-        while(!checkMinerals(grid)){
+        while (!checkMinerals(grid)) {
             char inputC = SaxionApp.readChar();
-            switch (inputC){
+            switch (inputC) {
                 case 'a':       //naar links
-                    if(coords[0]>1){
+                    if (coords[0] > 1) {
                         coords[0]--;
                     }
                     break;
                 case 'd':       //naar rechts
-                    if(coords[0]<rows-2){
+                    if (coords[0] < rows - 2) {
                         coords[0]++;
                     }
                     break;
                 case 'w':       //naar boven
-                    if(coords[1]>1){
+                    if (coords[1] > 1) {
                         coords[1]--;
                     }
                     break;
                 case 's':       //naar onderen
-                    if(coords[1]<column-2){
+                    if (coords[1] < column - 2) {
                         coords[1]++;
                     }
                     break;
                 case 'e':       //gebruik pickaxe
-                    if(pickaxe){
-                        grid[coords[0]][coords[1]].rocks-=2;
-                        grid[coords[0]-1][coords[1]].rocks--;
-                        grid[coords[0]][coords[1]-1].rocks--;
-                        grid[coords[0]+1][coords[1]].rocks--;
-                        grid[coords[0]][coords[1]+1].rocks--;
-                    }
-                    else{
-                        grid[coords[0]][coords[1]].rocks-=2;
-                        grid[coords[0]-1][coords[1]].rocks-=2;
-                        grid[coords[0]][coords[1]-1].rocks-=2;
-                        grid[coords[0]+1][coords[1]].rocks-=2;
-                        grid[coords[0]][coords[1]+1].rocks-=2;
-                        grid[coords[0]-1][coords[1]-1].rocks--;
-                        grid[coords[0]-1][coords[1]+1].rocks--;
-                        grid[coords[0]+1][coords[1]-1].rocks--;
-                        grid[coords[0]+1][coords[1]+1].rocks--;
+                    if (pickaxe) {
+                        grid[coords[0]][coords[1]].rocks -= 2;
+                        grid[coords[0] - 1][coords[1]].rocks--;
+                        grid[coords[0]][coords[1] - 1].rocks--;
+                        grid[coords[0] + 1][coords[1]].rocks--;
+                        grid[coords[0]][coords[1] + 1].rocks--;
+                    } else {
+                        grid[coords[0]][coords[1]].rocks -= 2;
+                        grid[coords[0] - 1][coords[1]].rocks -= 2;
+                        grid[coords[0]][coords[1] - 1].rocks -= 2;
+                        grid[coords[0] + 1][coords[1]].rocks -= 2;
+                        grid[coords[0]][coords[1] + 1].rocks -= 2;
+                        grid[coords[0] - 1][coords[1] - 1].rocks--;
+                        grid[coords[0] - 1][coords[1] + 1].rocks--;
+                        grid[coords[0] + 1][coords[1] - 1].rocks--;
+                        grid[coords[0] + 1][coords[1] + 1].rocks--;
                     }
 
                     drawGrid(grid);
-                    SaxionApp.drawImage("Graphics/Crosshair.png", (coords[0]-1)*64, (coords[1]-1)*64, 64, 64);
+                    if  (Mined <= 41) {
+                        LoadingbalkUpdate(inputC, Mined);
+                        Mined++;
+                    } else {
+
+                    }
+                    SaxionApp.drawImage("Graphics/Crosshair.png", (coords[0] - 1) * 64, (coords[1] - 1) * 64, 64, 64);
                     break;
                 case 'q':
                     pickaxe = !pickaxe;
             }
             drawSelect(coords);
         }
+
     }
 
     public void drawSelect(int[] coords){
@@ -846,5 +854,15 @@ public class Application implements Runnable {
         return false;
     }
 
+    public void LoadingbalkUpdate(char inputC, int Mined) {
+        if (inputC == 'e') {
+            SaxionApp.drawRectangle(5, 645, 2 + (20 * Mined), 30);
+            System.out.print(Mined );
+        }
+    }
 
+    public void DrawLoadingbalk() {
+        SaxionApp.setFill(Color.green);
+        SaxionApp.drawRectangle(5, 645, 2, 30);
+    }
 }
