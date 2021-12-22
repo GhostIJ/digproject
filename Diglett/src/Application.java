@@ -85,7 +85,6 @@ public class Application implements Runnable {
                 if(runAfterLoadSave){
                     SelectLevel();
                 }
-                
 
             } else if (MenuChoice == '3') {     //Exit
                 SaxionApp.clear();
@@ -627,6 +626,52 @@ public class Application implements Runnable {
         return clearedMinerals == randomMinerals;
     }
 
+    public void drawLoadSave(boolean isLoad){
+        boolean selectLoadSave = true;
+        while (selectLoadSave){
+            SaxionApp.clear();
+            SaxionApp.resize(1000, 530); //Resize scherm voor Load/Save
+
+            //achtergrond kleur en tekst kleur
+            SaxionApp.setBackgroundColor(background);
+            SaxionApp.setBorderSize(4);
+            SaxionApp.setBorderColor(Color.white);
+            SaxionApp.setFill(background);
+
+            SaxionApp.drawRectangle(165, 50, 650, 100);
+            SaxionApp.drawRectangle(165, 200, 200, 200);
+            SaxionApp.drawRectangle(390, 200, 200, 200);
+            SaxionApp.drawRectangle(615, 200, 200, 200);
+            SaxionApp.drawRectangle(5, 475 , 165, 50);
+
+            //25 er tussen, 200 breed
+
+            //design tekst
+            SaxionApp.turnBorderOff();
+            SaxionApp.setFill(Color.white);
+
+            //tekst in boxes
+            if(isLoad){
+                SaxionApp.drawBorderedText("Load File", 275, 60, 100);
+            }
+            else {
+                SaxionApp.drawBorderedText("Save File", 275, 60, 100);
+            }
+
+            SaxionApp.drawBorderedText("1", 215, 230, 175);
+            SaxionApp.drawBorderedText("2", 440, 230, 175);
+            SaxionApp.drawBorderedText("3", 665, 230, 175);
+            SaxionApp.drawBorderedText("0.Back", 10, 480, 50);
+
+            if(isLoad){
+                selectLoadSave = loadFromFile();
+            }
+            else {
+                selectLoadSave = saveToFile();
+            }
+        }
+    }
+
     public boolean saveToFile(){
 
         SaxionApp.clear();
@@ -744,52 +789,6 @@ public class Application implements Runnable {
         return false;
     }
 
-    public void drawLoadSave(boolean isLoad){
-        boolean selectLoadSave = true;
-        while (selectLoadSave){
-            SaxionApp.clear();
-            SaxionApp.resize(1000, 530); //Resize scherm voor Load/Save
-
-            //achtergrond kleur en tekst kleur
-            SaxionApp.setBackgroundColor(background);
-            SaxionApp.setBorderSize(4);
-            SaxionApp.setBorderColor(Color.white);
-            SaxionApp.setFill(background);
-
-            SaxionApp.drawRectangle(165, 50, 650, 100);
-            SaxionApp.drawRectangle(165, 200, 200, 200);
-            SaxionApp.drawRectangle(390, 200, 200, 200);
-            SaxionApp.drawRectangle(615, 200, 200, 200);
-            SaxionApp.drawRectangle(5, 475 , 165, 50);
-
-            //25 er tussen, 200 breed
-
-            //design tekst
-            SaxionApp.turnBorderOff();
-            SaxionApp.setFill(Color.white);
-
-            //tekst in boxes
-            if(isLoad){
-                SaxionApp.drawBorderedText("Load File", 275, 60, 100);
-            }
-            else {
-                SaxionApp.drawBorderedText("Save File", 275, 60, 100);
-            }
-
-            SaxionApp.drawBorderedText("1", 215, 230, 175);
-            SaxionApp.drawBorderedText("2", 440, 230, 175);
-            SaxionApp.drawBorderedText("3", 665, 230, 175);
-            SaxionApp.drawBorderedText("0.Back", 10, 480, 50);
-
-            if(isLoad){
-                selectLoadSave = loadFromFile();
-            }
-            else {
-                selectLoadSave = saveToFile();
-            }
-        }
-    }
-
     public boolean loadFromFile(){
         int fileNumber = 0;
         boolean loadingData = true;
@@ -846,5 +845,6 @@ public class Application implements Runnable {
         }
         return false;
     }
+
 
 }
