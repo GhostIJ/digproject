@@ -556,7 +556,7 @@ public class Application implements Runnable {
 
                     drawGrid(grid);
                     LoadingbalkUpdate(inputC, Mined);
-                    if  (Mined == 41) {
+                    if  (Mined >= 41) {
                         IsLoadingbalkFull = true;
                     }
                     SaxionApp.drawImage("Graphics/Crosshair.png", (coords[0] - 1) * 64, (coords[1] - 1) * 64, 64, 64);
