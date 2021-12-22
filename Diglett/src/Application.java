@@ -507,9 +507,10 @@ public class Application implements Runnable {
         coords[1] = (int) ((column / 2) + 0.5) - 1; //is 12/2 = 6+0.5 = 6.5-1 = 5.5(afgerond 5)
         SaxionApp.drawImage("Graphics/Crosshair.png", (coords[0] - 1) * 64, (coords[1] - 1) * 64, 64, 64);
         boolean pickaxe = true;
-        int Mined = 1;
+        int Mined = 0;
+        boolean IsLoadingbalkFull = false;
 
-        while (!checkMinerals(grid)) {
+        while (!checkMinerals(grid) && !IsLoadingbalkFull) {
             char inputC = SaxionApp.readChar();
             switch (inputC) {
                 case 'a':       //naar links
@@ -539,6 +540,7 @@ public class Application implements Runnable {
                         grid[coords[0]][coords[1] - 1].rocks--;
                         grid[coords[0] + 1][coords[1]].rocks--;
                         grid[coords[0]][coords[1] + 1].rocks--;
+                        Mined++;
                     } else {
                         grid[coords[0]][coords[1]].rocks -= 2;
                         grid[coords[0] - 1][coords[1]].rocks -= 2;
@@ -549,14 +551,13 @@ public class Application implements Runnable {
                         grid[coords[0] - 1][coords[1] + 1].rocks--;
                         grid[coords[0] + 1][coords[1] - 1].rocks--;
                         grid[coords[0] + 1][coords[1] + 1].rocks--;
+                        Mined += 2;
                     }
 
                     drawGrid(grid);
-                    if  (Mined <= 41) {
-                        LoadingbalkUpdate(inputC, Mined);
-                        Mined++;
-                    } else {
-
+                    LoadingbalkUpdate(inputC, Mined);
+                    if  (Mined == 41) {
+                        IsLoadingbalkFull = true;
                     }
                     SaxionApp.drawImage("Graphics/Crosshair.png", (coords[0] - 1) * 64, (coords[1] - 1) * 64, 64, 64);
                     break;
@@ -857,7 +858,6 @@ public class Application implements Runnable {
     public void LoadingbalkUpdate(char inputC, int Mined) {
         if (inputC == 'e') {
             SaxionApp.drawRectangle(5, 645, 2 + (20 * Mined), 30);
-            System.out.print(Mined );
         }
     }
 
