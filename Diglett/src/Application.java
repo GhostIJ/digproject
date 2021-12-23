@@ -95,6 +95,235 @@ public class Application implements Runnable {
         }
     }
 
+    /*
+    Load en save
+    */
+    public void drawLoadSave(boolean isLoad){
+        boolean selectLoadSave = true;
+        while (selectLoadSave){
+            SaxionApp.clear();
+            SaxionApp.resize(1000, 530); //Resize scherm voor Load/Save
+
+            //achtergrond kleur en tekst kleur
+            SaxionApp.setBackgroundColor(background);
+            SaxionApp.setBorderSize(4);
+            SaxionApp.setBorderColor(Color.white);
+            SaxionApp.setFill(background);
+
+            SaxionApp.drawRectangle(165, 50, 650, 100);
+            SaxionApp.drawRectangle(165, 200, 200, 200);
+            SaxionApp.drawRectangle(390, 200, 200, 200);
+            SaxionApp.drawRectangle(615, 200, 200, 200);
+            SaxionApp.drawRectangle(5, 475 , 165, 50);
+
+            //25 er tussen, 200 breed
+
+            //design tekst
+            SaxionApp.turnBorderOff();
+            SaxionApp.setFill(Color.white);
+
+            //tekst in boxes
+            if(isLoad){
+                SaxionApp.drawBorderedText("Load File", 275, 60, 100);
+            }
+            else {
+                SaxionApp.drawBorderedText("Save File", 275, 60, 100);
+            }
+
+            SaxionApp.drawBorderedText("1", 215, 230, 175);
+            SaxionApp.drawBorderedText("2", 440, 230, 175);
+            SaxionApp.drawBorderedText("3", 665, 230, 175);
+            SaxionApp.drawBorderedText("0.Back", 10, 480, 50);
+
+            if(isLoad){
+                selectLoadSave = loadFromFile();
+            }
+            else {
+                selectLoadSave = saveToFile();
+            }
+        }
+    }
+
+    public boolean saveToFile(){
+
+        SaxionApp.clear();
+
+        boolean savingData = true;
+        while (savingData){
+            int fileNumber = 0;
+            boolean saving = true;
+            while (saving){
+                SaxionApp.printLine("Which file do you want to save in?(1,2 or 3. Press E to exit)");
+                switch (SaxionApp.readChar()) {
+                    case '1' -> {
+                        fileNumber = 1;
+                        saving = false;
+                    }
+                    case '2' -> {
+                        fileNumber = 2;
+                        saving = false;
+                    }
+                    case '3' -> {
+                        fileNumber = 3;
+                        saving = false;
+                    }
+                    case 'e' -> {
+                        saving = false;
+                        savingData = false;
+                    }
+                    default -> SaxionApp.printLine("Please choose 1, 2, 3 or E");
+                }
+            }
+            if(fileNumber != 0){
+                String filename = "Savefile"+fileNumber+".csv";
+                try {
+                    File Save = new File(filename);
+                    if(Save.createNewFile()) { //wanneer er nog geen save bestand was
+                        try {
+                            FileWriter SaveWrite = new FileWriter(filename);
+                            StringBuilder toWrite = new StringBuilder();
+                            for(int i = 0; i < inventory.length; i++){
+                                if(i == inventory.length-1){
+                                    toWrite.append(inventory[i]);
+                                }
+                                else {
+                                    toWrite.append(inventory[i]).append(",");
+                                }
+                            }
+                            SaveWrite.write(String.valueOf(toWrite));
+                            SaveWrite.close();
+                        }
+                        catch (IOException f){
+                            SaxionApp.printLine();
+                            SaxionApp.printLine("An error occured while trying to save your data");
+                            SaxionApp.pause();
+                            SaxionApp.removeLastPrint();
+                            f.printStackTrace();
+                        }
+
+                        SaxionApp.printLine();
+                        SaxionApp.printLine("Data saved to save file \""+fileNumber+"\"");
+                        SaxionApp.pause();
+                        SaxionApp.removeLastPrint();
+                        savingData = false;
+                    }
+                    else { //wanneer er al een save bestand bestaat
+                        SaxionApp.printLine();
+                        SaxionApp.printLine("Save file is already in use");
+                        SaxionApp.printLine("Do you want to overwrite the file? (y/n)");
+                        if(SaxionApp.readChar() == 'y'){
+                            try {
+                                FileWriter SaveWrite = new FileWriter(filename);
+                                StringBuilder toWrite = new StringBuilder();
+                                for(int i = 0; i < inventory.length; i++){
+                                    if(i == inventory.length-1){
+                                        toWrite.append(inventory[i]);
+                                    }
+                                    else {
+                                        toWrite.append(inventory[i]).append(",");
+                                    }
+                                }
+                                SaveWrite.write(String.valueOf(toWrite));
+                                SaveWrite.close();
+                            }
+                            catch (IOException f){
+                                SaxionApp.printLine();
+                                SaxionApp.printLine("An error occured while trying to save your data");
+                                SaxionApp.pause();
+                                SaxionApp.removeLastPrint();
+                                f.printStackTrace();
+                            }
+
+                            SaxionApp.printLine();
+                            SaxionApp.printLine("Data saved to save file \""+fileNumber+"\"");
+                            SaxionApp.pause();
+                            SaxionApp.removeLastPrint();
+                            savingData = false;
+                        }
+                        else{
+                            SaxionApp.printLine("Data wasn't saved");
+                            SaxionApp.pause();
+                            SaxionApp.removeLastPrint();
+                        }
+                    }
+                }
+                catch (IOException e) {
+                    SaxionApp.printLine();
+                    SaxionApp.printLine("An error occured while creating the file.");
+                    SaxionApp.pause();
+                    SaxionApp.removeLastPrint();
+                    e.printStackTrace();
+                }
+            }
+        }
+        SaxionApp.printLine("Press any key to continue");
+        SaxionApp.readChar();
+        return false;
+    }
+
+    public boolean loadFromFile(){
+        int fileNumber = 0;
+        boolean loadingData = true;
+        while(loadingData){
+            boolean loading = true;
+            while(loading){
+                switch (SaxionApp.readChar()){
+                    case '1' -> {
+                        fileNumber = 1;
+                        loading = false;
+                    }
+                    case '2' -> {
+                        fileNumber = 2;
+                        loading = false;
+                    }
+                    case '3' -> {
+                        fileNumber = 3;
+                        loading = false;
+                    }
+                    case '0' -> {
+                        loading = false;
+                        loadingData = false;
+                        runAfterLoadSave = false;
+                    }
+                    default -> {
+                        SaxionApp.printLine("Please try again.");
+                        SaxionApp.pause();
+                        SaxionApp.removeLastPrint();
+                    }
+
+                }
+            }
+            if(fileNumber != 0){
+
+                String filename = "Savefile"+fileNumber+".csv";
+                File tempFile = new File(filename);
+                if(tempFile.exists()){
+                    CsvReader readFile = new CsvReader(filename);
+                    readFile.setSeparator(',');
+                    readFile.loadRow();
+                    for(int i = 0; i<inventory.length; i++){
+                        inventory[i] = readFile.getInt(i);
+                    }
+                    loadingData = false;
+                    SaxionApp.printLine("File loaded successfully!");
+                    SaxionApp.pause();
+                }
+                else {
+                    SaxionApp.printLine("There wasn't a file loaded in slot "+fileNumber);
+                    SaxionApp.pause();
+                    SaxionApp.removeLastPrint();
+                }
+            }
+        }
+        return false;
+    }
+    /*
+    Load en save einde
+    */
+    
+    /*
+    Mining levels
+    */
     public void SelectLevel() {
 
         //Select level functionaliteit
@@ -571,7 +800,6 @@ public class Application implements Runnable {
             }
             drawSelect(coords);
         }
-
     }
 
     public void drawSelect(int[] coords){
@@ -640,226 +868,6 @@ public class Application implements Runnable {
         return clearedMinerals == randomMinerals;
     }
 
-    public void drawLoadSave(boolean isLoad){
-        boolean selectLoadSave = true;
-        while (selectLoadSave){
-            SaxionApp.clear();
-            SaxionApp.resize(1000, 530); //Resize scherm voor Load/Save
-
-            //achtergrond kleur en tekst kleur
-            SaxionApp.setBackgroundColor(background);
-            SaxionApp.setBorderSize(4);
-            SaxionApp.setBorderColor(Color.white);
-            SaxionApp.setFill(background);
-
-            SaxionApp.drawRectangle(165, 50, 650, 100);
-            SaxionApp.drawRectangle(165, 200, 200, 200);
-            SaxionApp.drawRectangle(390, 200, 200, 200);
-            SaxionApp.drawRectangle(615, 200, 200, 200);
-            SaxionApp.drawRectangle(5, 475 , 165, 50);
-
-            //25 er tussen, 200 breed
-
-            //design tekst
-            SaxionApp.turnBorderOff();
-            SaxionApp.setFill(Color.white);
-
-            //tekst in boxes
-            if(isLoad){
-                SaxionApp.drawBorderedText("Load File", 275, 60, 100);
-            }
-            else {
-                SaxionApp.drawBorderedText("Save File", 275, 60, 100);
-            }
-
-            SaxionApp.drawBorderedText("1", 215, 230, 175);
-            SaxionApp.drawBorderedText("2", 440, 230, 175);
-            SaxionApp.drawBorderedText("3", 665, 230, 175);
-            SaxionApp.drawBorderedText("0.Back", 10, 480, 50);
-
-            if(isLoad){
-                selectLoadSave = loadFromFile();
-            }
-            else {
-                selectLoadSave = saveToFile();
-            }
-        }
-    }
-
-    public boolean saveToFile(){
-
-        SaxionApp.clear();
-
-        boolean savingData = true;
-        while (savingData){
-            int fileNumber = 0;
-            boolean saving = true;
-            while (saving){
-                SaxionApp.printLine("Which file do you want to save in?(1,2 or 3. Press E to exit)");
-                switch (SaxionApp.readChar()) {
-                    case '1' -> {
-                        fileNumber = 1;
-                        saving = false;
-                    }
-                    case '2' -> {
-                        fileNumber = 2;
-                        saving = false;
-                    }
-                    case '3' -> {
-                        fileNumber = 3;
-                        saving = false;
-                    }
-                    case 'e' -> {
-                        saving = false;
-                        savingData = false;
-                    }
-                    default -> SaxionApp.printLine("Please choose 1, 2, 3 or E");
-                }
-            }
-            if(fileNumber != 0){
-                String filename = "Savefile"+fileNumber+".csv";
-                try {
-                    File Save = new File(filename);
-                    if(Save.createNewFile()) { //wanneer er nog geen save bestand was
-                        try {
-                            FileWriter SaveWrite = new FileWriter(filename);
-                            StringBuilder toWrite = new StringBuilder();
-                            for(int i = 0; i < inventory.length; i++){
-                                if(i == inventory.length-1){
-                                    toWrite.append(inventory[i]);
-                                }
-                                else {
-                                    toWrite.append(inventory[i]).append(",");
-                                }
-                            }
-                            SaveWrite.write(String.valueOf(toWrite));
-                            SaveWrite.close();
-                        }
-                        catch (IOException f){
-                            SaxionApp.printLine();
-                            SaxionApp.printLine("An error occured while trying to save your data");
-                            SaxionApp.pause();
-                            SaxionApp.removeLastPrint();
-                            f.printStackTrace();
-                        }
-
-                        SaxionApp.printLine();
-                        SaxionApp.printLine("Data saved to save file \""+fileNumber+"\"");
-                        SaxionApp.pause();
-                        SaxionApp.removeLastPrint();
-                        savingData = false;
-                    }
-                    else { //wanneer er al een save bestand bestaat
-                        SaxionApp.printLine();
-                        SaxionApp.printLine("Save file is already in use");
-                        SaxionApp.printLine("Do you want to overwrite the file? (y/n)");
-                        if(SaxionApp.readChar() == 'y'){
-                            try {
-                                FileWriter SaveWrite = new FileWriter(filename);
-                                StringBuilder toWrite = new StringBuilder();
-                                for(int i = 0; i < inventory.length; i++){
-                                    if(i == inventory.length-1){
-                                        toWrite.append(inventory[i]);
-                                    }
-                                    else {
-                                        toWrite.append(inventory[i]).append(",");
-                                    }
-                                }
-                                SaveWrite.write(String.valueOf(toWrite));
-                                SaveWrite.close();
-                            }
-                            catch (IOException f){
-                                SaxionApp.printLine();
-                                SaxionApp.printLine("An error occured while trying to save your data");
-                                SaxionApp.pause();
-                                SaxionApp.removeLastPrint();
-                                f.printStackTrace();
-                            }
-
-                            SaxionApp.printLine();
-                            SaxionApp.printLine("Data saved to save file \""+fileNumber+"\"");
-                            SaxionApp.pause();
-                            SaxionApp.removeLastPrint();
-                            savingData = false;
-                        }
-                        else{
-                            SaxionApp.printLine("Data wasn't saved");
-                            SaxionApp.pause();
-                            SaxionApp.removeLastPrint();
-                        }
-                    }
-                }
-                catch (IOException e) {
-                    SaxionApp.printLine();
-                    SaxionApp.printLine("An error occured while creating the file.");
-                    SaxionApp.pause();
-                    SaxionApp.removeLastPrint();
-                    e.printStackTrace();
-                }
-            }
-        }
-        SaxionApp.printLine("Press any key to continue");
-        SaxionApp.readChar();
-        return false;
-    }
-
-    public boolean loadFromFile(){
-        int fileNumber = 0;
-        boolean loadingData = true;
-        while(loadingData){
-            boolean loading = true;
-            while(loading){
-                switch (SaxionApp.readChar()){
-                    case '1' -> {
-                        fileNumber = 1;
-                        loading = false;
-                    }
-                    case '2' -> {
-                        fileNumber = 2;
-                        loading = false;
-                    }
-                    case '3' -> {
-                        fileNumber = 3;
-                        loading = false;
-                    }
-                    case '0' -> {
-                        loading = false;
-                        loadingData = false;
-                        runAfterLoadSave = false;
-                    }
-                    default -> {
-                        SaxionApp.printLine("Please try again.");
-                        SaxionApp.pause();
-                        SaxionApp.removeLastPrint();
-                    }
-
-                }
-            }
-            if(fileNumber != 0){
-
-                String filename = "Savefile"+fileNumber+".csv";
-                File tempFile = new File(filename);
-                if(tempFile.exists()){
-                    CsvReader readFile = new CsvReader(filename);
-                    readFile.setSeparator(',');
-                    readFile.loadRow();
-                    for(int i = 0; i<inventory.length; i++){
-                        inventory[i] = readFile.getInt(i);
-                    }
-                    loadingData = false;
-                    SaxionApp.printLine("File loaded successfully!");
-                    SaxionApp.pause();
-                }
-                else {
-                    SaxionApp.printLine("There wasn't a file loaded in slot "+fileNumber);
-                    SaxionApp.pause();
-                    SaxionApp.removeLastPrint();
-                }
-            }
-        }
-        return false;
-    }
-
     public void LoadingbalkUpdate(char inputC, int Mined) {
         if (inputC == 'e') {
             SaxionApp.drawRectangle(5, 645, 2 + (20 * Mined), 30);
@@ -870,4 +878,7 @@ public class Application implements Runnable {
         SaxionApp.setFill(Color.green);
         SaxionApp.drawRectangle(5, 645, 2, 30);
     }
+    /*
+    Mining levels einde
+    */
 }
