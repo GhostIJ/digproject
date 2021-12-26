@@ -92,7 +92,13 @@ public class Application implements Runnable {
                 SaxionApp.drawBorderedText("We hope to see you again", 350, 275, 25);
                 menuRunning = false;
             } else if (MenuChoice == 't') {     //Test
-                DrawSmelting();
+                boolean smeltingRunning = true;
+                while (smeltingRunning){
+                    DrawSmelting();
+                    smeltingRunning = smeltingClick();
+                }
+
+
             }
         }
     }
@@ -321,98 +327,147 @@ public class Application implements Runnable {
     Load en save einde
     */
 
+    /*
+    Blacksmith
+    */
+
     public void DrawSmelting(){
-        boolean selectLoadSave = true;
-        while (selectLoadSave) {
-            SaxionApp.clear();
-            SaxionApp.resize(1000, 530); //Resize scherm voor Load/Save
+        SaxionApp.clear();
+        SaxionApp.resize(1000, 530); //Resize scherm voor Load/Save
 
-            //achtergrond kleur en tekst kleur
-            SaxionApp.setBackgroundColor(background);
-            SaxionApp.setBorderSize(4);
-            SaxionApp.setBorderColor(Color.white);
-            SaxionApp.setFill(background);
+        //achtergrond kleur en tekst kleur
+        SaxionApp.setBackgroundColor(background);
+        SaxionApp.setBorderSize(4);
+        SaxionApp.setBorderColor(Color.white);
+        SaxionApp.setFill(background);
 
-            SaxionApp.drawRectangle(25, 25, 680, 100);
-            SaxionApp.drawRectangle(25, 135, 680, 75);
-            SaxionApp.drawRectangle(25, 220, 680, 75);
-            SaxionApp.drawRectangle(25, 305, 680, 75);
-            SaxionApp.drawRectangle(25, 390, 680, 75);
-            SaxionApp.drawRectangle(5, 475, 165, 50);
+        SaxionApp.drawRectangle(25, 25, 680, 100);
+        SaxionApp.drawRectangle(25, 135, 680, 75);
+        SaxionApp.drawRectangle(25, 220, 680, 75);
+        SaxionApp.drawRectangle(25, 305, 680, 75);
+        SaxionApp.drawRectangle(25, 390, 680, 75);
+        SaxionApp.drawRectangle(5, 475, 165, 50);
 
-            //design tekst
-            SaxionApp.turnBorderOff();
-            SaxionApp.setFill(Color.white);
+        //design tekst
+        SaxionApp.turnBorderOff();
+        SaxionApp.setFill(Color.white);
 
-            SaxionApp.drawBorderedText("Smelting", 40, 42, 75);
-            SaxionApp.drawBorderedText("1 Iron Ingot",40, 149, 55);
-            SaxionApp.drawBorderedText("2 Copper Ingot",40, 234, 55);
-            SaxionApp.drawBorderedText("3 Tin Ingot",40, 319, 55);
-            SaxionApp.drawBorderedText("4 Bronze Ingot",40, 404, 55);
+        SaxionApp.drawBorderedText("Smelting", 40, 42, 75);
+        SaxionApp.drawBorderedText("1 Iron Ingot",40, 149, 55);
+        SaxionApp.drawBorderedText("2 Copper Ingot",40, 234, 55);
+        SaxionApp.drawBorderedText("3 Tin Ingot",40, 319, 55);
+        SaxionApp.drawBorderedText("4 Bronze Ingot",40, 404, 55);
 
-            //Draw coal & coal values
-            for(int i = 0; i<=255; i+=85){ //loop voor al het coal, steeds 85 pixels lager (op de y-as elke keer +85)
-                SaxionApp.drawImage("Graphics/Coal.png",410, 142+i, 60, 60);
-                if(inventory[0]-inventory[1] < 1){
-                    SaxionApp.setFill(Color.red);
-                }
-                SaxionApp.drawBorderedText(String.valueOf(inventory[0]-inventory[1]),460,149+i,35);
-                SaxionApp.setFill(Color.white);
-                SaxionApp.drawBorderedText("/", 476, 149+i, 55);
-                SaxionApp.drawBorderedText("1", 487, 164+i, 35);
-            }
-
-            //Draw iron, copper and tin ores and values.
-            int j = 2;
-            for(int i = 0; i<=170; i+=85){
-                switch (j) {
-                    case 2 -> SaxionApp.drawImage("Graphics/IronOre.png", 500, 140 + i, 70, 70);
-                    case 4 -> SaxionApp.drawImage("Graphics/CopperOre.png", 500, 140 + i, 70, 70);
-                    case 6 -> SaxionApp.drawImage("Graphics/TinOre.png", 500, 140 + i, 70, 70);
-                }
-                if(inventory[j]-inventory[j+1] < 3){
-                    SaxionApp.setFill(Color.red);
-                }
-                SaxionApp.drawBorderedText(String.valueOf(inventory[j]-inventory[j+1]),555,149+i,35);
-                SaxionApp.setFill(Color.white);
-                SaxionApp.drawBorderedText("/", 571, 149+i, 55);
-                SaxionApp.drawBorderedText("3", 583, 164+i, 35);
-                j+=2;
-            }
-
-            //Draw Copper and tin ingots and their values for bronze
-            SaxionApp.drawImage("Graphics/CopperIngot.png",500, 395, 70, 70);
-            if(inventory[18]-inventory[19] < 3){
+        //Draw coal & coal values
+        for(int i = 0; i<=255; i+=85){ //loop voor al het coal, steeds 85 pixels lager (op de y-as elke keer +85)
+            SaxionApp.drawImage("Graphics/Coal.png",410, 142+i, 60, 60);
+            if(inventory[0]-inventory[1] < 1){
                 SaxionApp.setFill(Color.red);
             }
-            SaxionApp.drawBorderedText(String.valueOf(inventory[18]-inventory[19]),555,404,35);
+            SaxionApp.drawBorderedText("1",465,153+i,50);
             SaxionApp.setFill(Color.white);
-            SaxionApp.drawBorderedText("/", 571, 404, 55);
-            SaxionApp.drawBorderedText("3", 583, 419, 35);
-
-            SaxionApp.drawImage("Graphics/TinIngot.png",600, 395, 70, 70);
-            if(inventory[18]-inventory[19] < 1){
-                SaxionApp.setFill(Color.red);
-            }
-            SaxionApp.drawBorderedText(String.valueOf(inventory[20]-inventory[21]),655,404,35);
-            SaxionApp.setFill(Color.white);
-            SaxionApp.drawBorderedText("/", 671, 404, 55);
-            SaxionApp.drawBorderedText("1", 682, 419, 35);
-
-            //inventory draw
-            SaxionApp.drawBorderedText("Inventory", 720, 42, 60);
-            SaxionApp.drawImage("Graphics/IronIngot.png", 705, 123, 100, 100);
-            SaxionApp.drawImage("Graphics/CopperIngot.png", 705, 208, 100, 100);
-            SaxionApp.drawImage("Graphics/TinIngot.png", 705, 293, 100, 100);
-            SaxionApp.drawImage("Graphics/BronzeIngot.png", 705, 378, 100, 100);
-            SaxionApp.drawBorderedText(String.valueOf(inventory[16]-inventory[17]),805, 149, 50);
-            SaxionApp.drawBorderedText(String.valueOf(inventory[18]-inventory[19]),805, 234, 50);
-            SaxionApp.drawBorderedText(String.valueOf(inventory[20]-inventory[21]),805, 319, 50);
-            SaxionApp.drawBorderedText(String.valueOf(inventory[22]-inventory[23]),805, 404, 50);
-            SaxionApp.drawBorderedText("0 Back", 10, 480, 50);
-
-            SaxionApp.readChar();
         }
+
+        //Draw iron, copper and tin ores and values.
+        int j = 2;
+        for(int i = 0; i<=170; i+=85){
+            switch (j) {
+                case 2 -> SaxionApp.drawImage("Graphics/IronOre.png", 500, 140 + i, 70, 70);
+                case 4 -> SaxionApp.drawImage("Graphics/CopperOre.png", 500, 140 + i, 70, 70);
+                case 6 -> SaxionApp.drawImage("Graphics/TinOre.png", 500, 140 + i, 70, 70);
+            }
+            if(inventory[j]-inventory[j+1] < 3){
+                SaxionApp.setFill(Color.red);
+            }
+            SaxionApp.drawBorderedText("3",560,153+i,50);
+            SaxionApp.setFill(Color.white);
+
+            j+=2;
+        }
+
+        //Draw Copper and tin ingots and their values for bronze
+        SaxionApp.drawImage("Graphics/CopperIngot.png",500, 395, 70, 70);
+        if(inventory[18]-inventory[19] < 3){
+            SaxionApp.setFill(Color.red);
+        }
+        SaxionApp.drawBorderedText("3",560,408,50);
+        SaxionApp.setFill(Color.white);
+
+
+        SaxionApp.drawImage("Graphics/TinIngot.png",600, 395, 70, 70);
+        if(inventory[19]-inventory[20] < 1){
+            SaxionApp.setFill(Color.red);
+        }
+        SaxionApp.drawBorderedText("1",660,408,50);
+        SaxionApp.setFill(Color.white);
+
+        //inventory draw
+        SaxionApp.drawBorderedText("Inventory", 720, 42, 60);
+        SaxionApp.drawImage("Graphics/IronIngot.png", 705, 123, 100, 100);
+        SaxionApp.drawImage("Graphics/CopperIngot.png", 705, 208, 100, 100);
+        SaxionApp.drawImage("Graphics/TinIngot.png", 705, 293, 100, 100);
+        SaxionApp.drawImage("Graphics/BronzeIngot.png", 705, 378, 100, 100);
+
+        SaxionApp.drawImage("Graphics/Coal.png", 840, 123, 100, 100);
+        SaxionApp.drawImage("Graphics/IronOre.png", 840, 208, 100, 100);
+        SaxionApp.drawImage("Graphics/CopperOre.png", 840, 293, 100, 100);
+        SaxionApp.drawImage("Graphics/TinOre.png", 840, 378, 100, 100);
+        int a = 16;
+        int b = 0;
+        for(int i = 149; i<=404; i+=85){
+            if(inventory[a]-inventory[a+1] > 99){
+                SaxionApp.drawBorderedText("99",790, i, 50);
+            }
+            else {
+                SaxionApp.drawBorderedText(String.valueOf(inventory[a]-inventory[a+1]),790, i, 50);
+            }
+            if(inventory[b]-inventory[b+1] > 99){
+                SaxionApp.drawBorderedText("99",925, i, 50);
+            }
+            else {
+                SaxionApp.drawBorderedText(String.valueOf(inventory[b]-inventory[b+1]),925, i, 50);
+            }
+            a+=2;
+            b+=2;
+        }
+        SaxionApp.drawBorderedText("0 Back", 10, 480, 50);
+    }
+
+    public boolean smeltingClick(){
+        switch(SaxionApp.readChar()){
+            case '1':
+                if(inventory[0]-inventory[1] >= 1 && inventory[2]-inventory[3] >= 3){
+                    inventory[1]++;
+                    inventory[3]+=3;
+                    inventory[16]+=3;
+                }
+                break;
+            case '2':
+                if(inventory[0]-inventory[1] >= 1 && inventory[4]-inventory[5] >= 3){
+                    inventory[1]++;
+                    inventory[5]+=3;
+                    inventory[18]+=3;
+                }
+                break;
+            case '3':
+                if(inventory[0]-inventory[1] >= 1 && inventory[6]-inventory[7] >= 3){
+                    inventory[1]++;
+                    inventory[7]+=3;
+                    inventory[20]+=3;
+                }
+                break;
+            case '4':
+                if(inventory[0]-inventory[1] >= 1 && inventory[18]-inventory[19] >= 3 && inventory[20]-inventory[21] >=1){
+                    inventory[1]++;
+                    inventory[19]+=3;
+                    inventory[21]+=1;
+                    inventory[22]+=4;
+                }
+                break;
+            case '0':
+                return false;
+        }
+        return true;
     }
 
     /*
