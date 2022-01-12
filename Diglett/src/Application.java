@@ -513,9 +513,10 @@ public class Application implements Runnable {
                 }
             } else if (GameMenuChoice == '4') { //Options
                 Options(SelectGameMenu);
-            } else if (GameMenuChoice == '0') {
                 SelectGameMenu = false;
-            }
+            } /*else if (GameMenuChoice == '0') { //exit game test
+                SelectGameMenu = false;
+            }*/
         }
     }
 
@@ -531,28 +532,35 @@ public class Application implements Runnable {
             SaxionApp.setFill(background);
 
             SaxionApp.drawRectangle(316, 25, 440, 135);
-            SaxionApp.drawRectangle(381, 275, 310, 75);
-            //SaxionApp.drawRectangle(436, 375, 310, 75);
+            SaxionApp.drawRectangle(381, 225, 310, 75);
+            SaxionApp.drawRectangle(381, 325, 310, 75);
+            SaxionApp.drawRectangle(381, 425, 310, 75);
             SaxionApp.drawRectangle(436, 600, 175, 50);
 
             SaxionApp.turnBorderOff();
             SaxionApp.setFill(Color.white);
 
             SaxionApp.drawBorderedText("Options", 326, 35, 120);
-            SaxionApp.drawBorderedText("1", 386, 290, 50);
-            SaxionApp.drawBorderedText("Save Game", 426, 290, 50);
-            SaxionApp.drawBorderedText("2", 386, 390, 50);
-            SaxionApp.drawBorderedText("Exit Game", 436, 390, 50);
+            SaxionApp.drawBorderedText("1", 386, 240, 50);
+            SaxionApp.drawBorderedText("Save Game", 426, 240, 50);
+            SaxionApp.drawBorderedText("2", 386, 340, 50);
+            SaxionApp.drawBorderedText("Stats", 436, 340, 50);
+            SaxionApp.drawBorderedText("3", 386, 440, 50);
+            SaxionApp.drawBorderedText("Quit Game", 436, 440, 50);
             SaxionApp.drawBorderedText("0 Back", 446, 605, 50);
 
             int OptionChoice = SaxionApp.readChar();
 
             if (OptionChoice == '1') { //Save game
 
-            } else if (OptionChoice =='2') { //Exit Game
+            } else if (OptionChoice =='2') { //Stats
+
+            } else if (OptionChoice == '3') { //Quit game
+                OptionsRunning = false;
 
             } else if (OptionChoice == '0') { //Back
                 OptionsRunning = false;
+                GameMenu();
             }
         }
     }
