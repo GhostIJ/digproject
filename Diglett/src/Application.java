@@ -10,7 +10,7 @@ import java.io.IOException; //IOException class to handle errors
 public class Application implements Runnable {
 
     public static void main(String[] args) {
-        SaxionApp.start(new Application(), 832, 670);
+        SaxionApp.start(new Application(), 1072, 680);
     }
 
     int rows = 13+2;
@@ -50,7 +50,6 @@ public class Application implements Runnable {
         boolean menuRunning = true;
         while (menuRunning){
             SaxionApp.clear();
-            SaxionApp.resize(1000, 530); //Resize scherm voor main menu
 
             //Achtergrond kleur, border uit en tekst kleur
             SaxionApp.setBackgroundColor(background);
@@ -61,35 +60,35 @@ public class Application implements Runnable {
             SaxionApp.drawBorderedText("Titel", 50, 50, 100);
 
             //keuzes in menu
-            SaxionApp.drawBorderedText("1. New Game", 50, 200, 25);
-            SaxionApp.drawBorderedText("2. Load Game", 50, 250, 25);
-            SaxionApp.drawBorderedText("3. Exit", 50, 300, 25);
+            SaxionApp.drawBorderedText("1 New Game", 50, 250, 35);
+            SaxionApp.drawBorderedText("2 Load Game", 50, 310, 35);
+            SaxionApp.drawBorderedText("3 Exit Game", 50, 370, 35);
 
             //made by list
-            SaxionApp.drawBorderedText("Made By: ", 690, 400, 20);
-            SaxionApp.drawBorderedText("Anton Vorderman", 780, 400, 20);
-            SaxionApp.drawBorderedText("Ilse Jansen", 780, 425, 20);
-            SaxionApp.drawBorderedText("Sterre Liedewij", 780, 450, 20);
-            SaxionApp.drawBorderedText("Jeroen Groen in't Woud",780, 475, 20);
+            SaxionApp.drawBorderedText("Made By: ", 760, 575, 20);
+            SaxionApp.drawBorderedText("Anton Vorderman", 850, 575, 20);
+            SaxionApp.drawBorderedText("Ilse Jansen", 850, 600, 20);
+            SaxionApp.drawBorderedText("Sterre Liedewij", 850, 625, 20);
+            SaxionApp.drawBorderedText("Jeroen Groen in't Woud",850, 650, 20);
 
             int MenuChoice = SaxionApp.readChar();
 
             if (MenuChoice == '1') {    //New Game
                 SaxionApp.clear();
                 Arrays.fill(inventory, 0);
-                SelectLevel();
+                GameMenu();
 
 
             } else if (MenuChoice == '2') {     //Load game
                 drawLoadSave(true);
                 if(runAfterLoadSave){
-                    SelectLevel();
+                    GameMenu();
                 }
 
             } else if (MenuChoice == '3') {     //Exit
                 SaxionApp.clear();
-                SaxionApp.drawBorderedText("Thank You for Playing", 125, 200, 75);
-                SaxionApp.drawBorderedText("We hope to see you again", 350, 275, 25);
+                SaxionApp.drawBorderedText("Thank You for Playing", 171, 275, 75);
+                SaxionApp.drawBorderedText("We hope to see you again", 396, 350, 25);
                 menuRunning = false;
             } else if (MenuChoice == 't') {     //Test
                 boolean smeltingRunning = true;
@@ -110,7 +109,6 @@ public class Application implements Runnable {
         boolean selectLoadSave = true;
         while (selectLoadSave){
             SaxionApp.clear();
-            SaxionApp.resize(1000, 530); //Resize scherm voor Load/Save
 
             //achtergrond kleur en tekst kleur
             SaxionApp.setBackgroundColor(background);
@@ -118,11 +116,11 @@ public class Application implements Runnable {
             SaxionApp.setBorderColor(Color.white);
             SaxionApp.setFill(background);
 
-            SaxionApp.drawRectangle(165, 50, 650, 100);
-            SaxionApp.drawRectangle(165, 200, 200, 200);
-            SaxionApp.drawRectangle(390, 200, 200, 200);
-            SaxionApp.drawRectangle(615, 200, 200, 200);
-            SaxionApp.drawRectangle(5, 475 , 165, 50);
+            SaxionApp.drawRectangle(211, 125, 650, 100);
+            SaxionApp.drawRectangle(211, 275, 200, 200);
+            SaxionApp.drawRectangle(436, 275, 200, 200);
+            SaxionApp.drawRectangle(661, 275, 200, 200);
+            SaxionApp.drawRectangle(5, 625 , 165, 50);
 
             //design tekst
             SaxionApp.turnBorderOff();
@@ -130,16 +128,16 @@ public class Application implements Runnable {
 
             //tekst in boxes
             if(isLoad){
-                SaxionApp.drawBorderedText("Load File", 275, 60, 100);
+                SaxionApp.drawBorderedText("Load File", 321, 135, 100);
             }
             else {
-                SaxionApp.drawBorderedText("Save File", 275, 60, 100);
+                SaxionApp.drawBorderedText("Save File", 321, 135, 100);
             }
 
-            SaxionApp.drawBorderedText("1", 215, 230, 175);
-            SaxionApp.drawBorderedText("2", 440, 230, 175);
-            SaxionApp.drawBorderedText("3", 665, 230, 175);
-            SaxionApp.drawBorderedText("0 Back", 10, 480, 50);
+            SaxionApp.drawBorderedText("1", 261, 305, 175);
+            SaxionApp.drawBorderedText("2", 486, 305, 175);
+            SaxionApp.drawBorderedText("3", 711, 305, 175);
+            SaxionApp.drawBorderedText("0 Back", 10, 630, 50);
 
             if(isLoad){
                 selectLoadSave = loadFromFile();
@@ -333,7 +331,6 @@ public class Application implements Runnable {
 
     public void DrawSmelting(){
         SaxionApp.clear();
-        SaxionApp.resize(1000, 530); //Resize scherm voor Load/Save
 
         //achtergrond kleur en tekst kleur
         SaxionApp.setBackgroundColor(background);
@@ -341,30 +338,30 @@ public class Application implements Runnable {
         SaxionApp.setBorderColor(Color.white);
         SaxionApp.setFill(background);
 
-        SaxionApp.drawRectangle(25, 25, 680, 100);
-        SaxionApp.drawRectangle(25, 135, 680, 75);
-        SaxionApp.drawRectangle(25, 220, 680, 75);
-        SaxionApp.drawRectangle(25, 305, 680, 75);
-        SaxionApp.drawRectangle(25, 390, 680, 75);
-        SaxionApp.drawRectangle(5, 475, 165, 50);
+        SaxionApp.drawRectangle(25, 75, 680, 100);
+        SaxionApp.drawRectangle(25, 185, 680, 75);
+        SaxionApp.drawRectangle(25, 270, 680, 75);
+        SaxionApp.drawRectangle(25, 355, 680, 75);
+        SaxionApp.drawRectangle(25, 440, 680, 75);
+        SaxionApp.drawRectangle(5, 625, 165, 50);
 
         //design tekst
         SaxionApp.turnBorderOff();
         SaxionApp.setFill(Color.white);
 
-        SaxionApp.drawBorderedText("Smelting", 40, 42, 75);
-        SaxionApp.drawBorderedText("1 Iron Ingot",40, 149, 55);
-        SaxionApp.drawBorderedText("2 Copper Ingot",40, 234, 55);
-        SaxionApp.drawBorderedText("3 Tin Ingot",40, 319, 55);
-        SaxionApp.drawBorderedText("4 Bronze Ingot",40, 404, 55);
+        SaxionApp.drawBorderedText("Smelting", 40, 92, 75);
+        SaxionApp.drawBorderedText("1 Iron Ingot",40, 199, 55);
+        SaxionApp.drawBorderedText("2 Copper Ingot",40, 284, 55);
+        SaxionApp.drawBorderedText("3 Tin Ingot",40, 369, 55);
+        SaxionApp.drawBorderedText("4 Bronze Ingot",40, 454, 55);
 
         //Draw coal & coal values
         for(int i = 0; i<=255; i+=85){ //loop voor al het coal, steeds 85 pixels lager (op de y-as elke keer +85)
-            SaxionApp.drawImage("Graphics/Coal.png",410, 142+i, 60, 60);
+            SaxionApp.drawImage("Graphics/Coal.png",410, 192+i, 60, 60);
             if(inventory[0]-inventory[1] < 1){
                 SaxionApp.setFill(Color.red);
             }
-            SaxionApp.drawBorderedText("1",465,153+i,50);
+            SaxionApp.drawBorderedText("1",465,203+i,50);
             SaxionApp.setFill(Color.white);
         }
 
@@ -372,49 +369,49 @@ public class Application implements Runnable {
         int j = 2;
         for(int i = 0; i<=170; i+=85){
             switch (j) {
-                case 2 -> SaxionApp.drawImage("Graphics/IronOre.png", 500, 140 + i, 70, 70);
-                case 4 -> SaxionApp.drawImage("Graphics/CopperOre.png", 500, 140 + i, 70, 70);
-                case 6 -> SaxionApp.drawImage("Graphics/TinOre.png", 500, 140 + i, 70, 70);
+                case 2 -> SaxionApp.drawImage("Graphics/IronOre.png", 500, 190 + i, 70, 70);
+                case 4 -> SaxionApp.drawImage("Graphics/CopperOre.png", 500, 190 + i, 70, 70);
+                case 6 -> SaxionApp.drawImage("Graphics/TinOre.png", 500, 190 + i, 70, 70);
             }
             if(inventory[j]-inventory[j+1] < 3){
                 SaxionApp.setFill(Color.red);
             }
-            SaxionApp.drawBorderedText("3",560,153+i,50);
+            SaxionApp.drawBorderedText("3",560,203+i,50);
             SaxionApp.setFill(Color.white);
 
             j+=2;
         }
 
         //Draw Copper and tin ingots and their values for bronze
-        SaxionApp.drawImage("Graphics/CopperIngot.png",500, 395, 70, 70);
+        SaxionApp.drawImage("Graphics/CopperIngot.png",500, 445, 70, 70);
         if(inventory[18]-inventory[19] < 3){
             SaxionApp.setFill(Color.red);
         }
-        SaxionApp.drawBorderedText("3",560,408,50);
+        SaxionApp.drawBorderedText("3",560,458,50);
         SaxionApp.setFill(Color.white);
 
 
-        SaxionApp.drawImage("Graphics/TinIngot.png",600, 395, 70, 70);
+        SaxionApp.drawImage("Graphics/TinIngot.png",600, 445, 70, 70);
         if(inventory[19]-inventory[20] < 1){
             SaxionApp.setFill(Color.red);
         }
-        SaxionApp.drawBorderedText("1",660,408,50);
+        SaxionApp.drawBorderedText("1",660,458,50);
         SaxionApp.setFill(Color.white);
 
         //inventory draw
-        SaxionApp.drawBorderedText("Inventory", 720, 42, 60);
-        SaxionApp.drawImage("Graphics/IronIngot.png", 705, 123, 100, 100);
-        SaxionApp.drawImage("Graphics/CopperIngot.png", 705, 208, 100, 100);
-        SaxionApp.drawImage("Graphics/TinIngot.png", 705, 293, 100, 100);
-        SaxionApp.drawImage("Graphics/BronzeIngot.png", 705, 378, 100, 100);
+        SaxionApp.drawBorderedText("Inventory", 720, 92, 60);
+        SaxionApp.drawImage("Graphics/IronIngot.png", 705, 173, 100, 100);
+        SaxionApp.drawImage("Graphics/CopperIngot.png", 705, 258, 100, 100);
+        SaxionApp.drawImage("Graphics/TinIngot.png", 705, 343, 100, 100);
+        SaxionApp.drawImage("Graphics/BronzeIngot.png", 705, 428, 100, 100);
 
-        SaxionApp.drawImage("Graphics/Coal.png", 840, 123, 100, 100);
-        SaxionApp.drawImage("Graphics/IronOre.png", 840, 208, 100, 100);
-        SaxionApp.drawImage("Graphics/CopperOre.png", 840, 293, 100, 100);
-        SaxionApp.drawImage("Graphics/TinOre.png", 840, 378, 100, 100);
+        SaxionApp.drawImage("Graphics/Coal.png", 840, 173, 100, 100);
+        SaxionApp.drawImage("Graphics/IronOre.png", 840, 258, 100, 100);
+        SaxionApp.drawImage("Graphics/CopperOre.png", 840, 343, 100, 100);
+        SaxionApp.drawImage("Graphics/TinOre.png", 840, 428, 100, 100);
         int a = 16;
         int b = 0;
-        for(int i = 149; i<=404; i+=85){
+        for(int i = 199; i<=454; i+=85){
             if(inventory[a]-inventory[a+1] > 99){
                 SaxionApp.drawBorderedText("99",790, i, 50);
             }
@@ -430,7 +427,7 @@ public class Application implements Runnable {
             a+=2;
             b+=2;
         }
-        SaxionApp.drawBorderedText("0 Back", 10, 480, 50);
+        SaxionApp.drawBorderedText("0 Back", 10, 630, 50);
     }
 
     public boolean smeltingClick(){
@@ -473,14 +470,99 @@ public class Application implements Runnable {
     /*
     Mining levels
     */
+    public void GameMenu() {
+
+        boolean SelectGameMenu = true;
+        while (SelectGameMenu) {
+            SaxionApp.clear();
+
+            SaxionApp.setBackgroundColor(background);
+            SaxionApp.setBorderSize(4);
+            SaxionApp.setBorderColor(Color.white);
+            SaxionApp.setFill(background);
+
+            SaxionApp.drawRectangle(50, 50, 550, 105);
+            SaxionApp.drawRectangle(50, 180, 550, 105);
+            SaxionApp.drawRectangle(50, 310, 550, 105);
+            SaxionApp.drawRectangle(50, 440, 550, 105);
+
+            SaxionApp.turnBorderOff();
+            SaxionApp.setFill(Color.white);
+
+            SaxionApp.drawBorderedText("1", 60, 65, 90);
+            SaxionApp.drawBorderedText("2", 60, 195, 90);
+            SaxionApp.drawBorderedText("3", 60, 325, 90);
+            SaxionApp.drawBorderedText("4", 60, 455, 90);
+            SaxionApp.drawBorderedText("Mines", 150, 65, 90);
+            SaxionApp.drawBorderedText("Inventory", 150, 190, 90);
+            SaxionApp.drawBorderedText("Blacksmith", 150, 325, 90);
+            SaxionApp.drawBorderedText("Options", 150, 450, 90);
+
+
+            int GameMenuChoice = SaxionApp.readChar();
+
+            if (GameMenuChoice == '1') { //Mines
+                SelectLevel();
+            } else if (GameMenuChoice == '2') { //Inventory
+
+            } else if (GameMenuChoice == '3') { //Blacksmith
+                boolean smeltingRunning = true;
+                while (smeltingRunning) {
+                    DrawSmelting();
+                    smeltingRunning = smeltingClick();
+                }
+            } else if (GameMenuChoice == '4') { //Options
+                Options(SelectGameMenu);
+            } else if (GameMenuChoice == '0') {
+                SelectGameMenu = false;
+            }
+        }
+    }
+
+    public void Options(boolean SelectGameMenu) {
+
+        boolean OptionsRunning = true;
+        while (OptionsRunning) {
+            SaxionApp.clear();
+
+            SaxionApp.setBackgroundColor(background);
+            SaxionApp.setBorderSize(4);
+            SaxionApp.setBorderColor(Color.white);
+            SaxionApp.setFill(background);
+
+            SaxionApp.drawRectangle(316, 25, 440, 135);
+            SaxionApp.drawRectangle(381, 275, 310, 75);
+            //SaxionApp.drawRectangle(436, 375, 310, 75);
+            SaxionApp.drawRectangle(436, 600, 175, 50);
+
+            SaxionApp.turnBorderOff();
+            SaxionApp.setFill(Color.white);
+
+            SaxionApp.drawBorderedText("Options", 326, 35, 120);
+            SaxionApp.drawBorderedText("1", 386, 290, 50);
+            SaxionApp.drawBorderedText("Save Game", 426, 290, 50);
+            SaxionApp.drawBorderedText("2", 386, 390, 50);
+            SaxionApp.drawBorderedText("Exit Game", 436, 390, 50);
+            SaxionApp.drawBorderedText("0 Back", 446, 605, 50);
+
+            int OptionChoice = SaxionApp.readChar();
+
+            if (OptionChoice == '1') { //Save game
+
+            } else if (OptionChoice =='2') { //Exit Game
+
+            } else if (OptionChoice == '0') { //Back
+                OptionsRunning = false;
+            }
+        }
+    }
+
     public void SelectLevel() {
 
         //Select level functionaliteit
         boolean SelectLevelRunning = true;
         while (SelectLevelRunning) {
             SaxionApp.clear();
-
-            SaxionApp.resize(1000, 530); //Resize scherm voor Level select
 
             //achtergrond kleur en tekst kleur
             SaxionApp.setBackgroundColor(background);
@@ -489,82 +571,72 @@ public class Application implements Runnable {
             SaxionApp.setFill(background);
 
             //randen rondom boxes
-            SaxionApp.drawRectangle(165, 50, 650, 100);
-            SaxionApp.drawRectangle(165, 175, 125,125);
-            SaxionApp.drawRectangle(340, 175, 125, 125);
-            SaxionApp.drawRectangle(515, 175, 125, 125);
-            SaxionApp.drawRectangle(690, 175, 125, 125);
-            SaxionApp.drawRectangle(5, 475 , 165, 50);
-            SaxionApp.drawRectangle(165, 325, 125 , 125);
-            SaxionApp.drawRectangle(340, 325, 125, 125);
-            SaxionApp.drawRectangle(515, 325, 125, 125);
-            SaxionApp.drawRectangle(690, 325, 125, 125);
-            //SaxionApp.drawRectangle(840, 475, 155, 50);
+            SaxionApp.drawRectangle(211, 100, 650, 100);
+            SaxionApp.drawRectangle(211, 225, 125,125);
+            SaxionApp.drawRectangle(386, 225, 125, 125);
+            SaxionApp.drawRectangle(561, 225, 125, 125);
+            SaxionApp.drawRectangle(736, 225, 125, 125);
+            SaxionApp.drawRectangle(5, 625 , 165, 50);
+            SaxionApp.drawRectangle(211, 375, 125 , 125);
+            SaxionApp.drawRectangle(386, 375, 125, 125);
+            SaxionApp.drawRectangle(561, 375, 125, 125);
+            SaxionApp.drawRectangle(736, 375, 125, 125);
 
             //design tekst
             SaxionApp.turnBorderOff();
             SaxionApp.setFill(Color.white);
 
             //tekst in boxes
-            SaxionApp.drawBorderedText("Select Mine", 215, 60, 100);
-            SaxionApp.drawBorderedText("1" , 192, 185, 130);
-            SaxionApp.drawBorderedText("2", 367, 185, 130);
-            SaxionApp.drawBorderedText("3" , 542, 185, 130);
-            SaxionApp.drawBorderedText("4", 717, 185, 130);
-            SaxionApp.drawBorderedText("5", 192, 335, 130);
-            SaxionApp.drawBorderedText("6", 367, 335, 130);
-            SaxionApp.drawBorderedText("7", 542, 335, 130);
-            SaxionApp.drawBorderedText("8", 717, 335, 130);
-            // SaxionApp.drawBorderedText("9.Next", 845, 480, 50);
-            SaxionApp.drawBorderedText("0 Back", 10, 480, 50);
+            SaxionApp.drawBorderedText("Select Mine", 261, 110, 100);
+            SaxionApp.drawBorderedText("1" , 238, 235, 130);
+            SaxionApp.drawBorderedText("2", 413, 235, 130);
+            SaxionApp.drawBorderedText("3" , 588, 235, 130);
+            SaxionApp.drawBorderedText("4", 763, 235, 130);
+            SaxionApp.drawBorderedText("5", 238, 385, 130);
+            SaxionApp.drawBorderedText("6", 413, 385, 130);
+            SaxionApp.drawBorderedText("7", 588, 385, 130);
+            SaxionApp.drawBorderedText("8", 763, 385, 130);
+            SaxionApp.drawBorderedText("0 Back", 10, 630, 50);
 
 
             int Levelchoice = SaxionApp.readChar();
 
             if (Levelchoice == '1') { //mine 1
-                SaxionApp.resize(832, 680);
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 1;
                 createLevel(level);
 
             } else if (Levelchoice == '2') { //mine 2
-                SaxionApp.resize(832, 680);
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 2;
                 createLevel(level);
 
             } else if (Levelchoice == '3') { // mine 3
-                SaxionApp.resize(832, 680);
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 3;
                 createLevel(level);
 
             } else if (Levelchoice == '4') { // mine 4
-                SaxionApp.resize(832, 680);
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 4;
                 createLevel(level);
 
             } else if (Levelchoice == '5') { // mine 5
-                SaxionApp.resize(832, 680);
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 5;
                 createLevel(level);
 
             } else if (Levelchoice == '6') { // mine 6
-                SaxionApp.resize(832, 680);
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 6;
                 createLevel(level);
 
             } else if (Levelchoice == '7') { // mine 7
-                SaxionApp.resize(832, 680);
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 7;
                 createLevel(level);
 
             } else if (Levelchoice == '8') { // mine 8
-                SaxionApp.resize(832, 680);
                 SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 8;
                 createLevel(level);
