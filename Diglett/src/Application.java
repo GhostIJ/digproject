@@ -331,7 +331,6 @@ public class Application implements Runnable {
 
     public void DrawBlacksmith(){
         SaxionApp.clear();
-        SaxionApp.resize(1000, 530); //Resize scherm voor Blacksmith
 
         SaxionApp.setBackgroundColor(background);
         SaxionApp.setBorderSize(4);
@@ -515,7 +514,6 @@ public class Application implements Runnable {
 
     public void DrawSmithing(){
         SaxionApp.clear();
-        SaxionApp.resize(1000, 530); //Resize scherm voor Smithing
 
         //achtergrond kleur en tekst kleur
         SaxionApp.setBackgroundColor(background);
@@ -653,10 +651,10 @@ public class Application implements Runnable {
             } else if (GameMenuChoice == '2') { //Inventory
 
             } else if (GameMenuChoice == '3') { //Blacksmith
-                boolean smeltingRunning = true;
-                while (smeltingRunning) {
-                    DrawSmelting();
-                    smeltingRunning = smeltingClick();
+                boolean blacksmithRunning = true;
+                while (blacksmithRunning){
+                    DrawBlacksmith();
+                    blacksmithRunning = BlacksmithClick();
                 }
             } else if (GameMenuChoice == '4') { //Options
                 Options(SelectGameMenu);
