@@ -337,19 +337,19 @@ public class Application implements Runnable {
         SaxionApp.setBorderColor(Color.white);
         SaxionApp.setFill(background);
 
-        SaxionApp.drawRectangle(25, 25, 680, 100);
-        SaxionApp.drawRectangle(25, 135, 680, 75);
-        SaxionApp.drawRectangle(25, 220, 680, 75);
-        SaxionApp.drawRectangle(5, 475, 165, 50);
+        SaxionApp.drawRectangle(25, 75, 680, 100);
+        SaxionApp.drawRectangle(25, 185, 680, 75);
+        SaxionApp.drawRectangle(25, 270, 680, 75);
+        SaxionApp.drawRectangle(5, 625, 165, 50);
 
         //design tekst
         SaxionApp.turnBorderOff();
         SaxionApp.setFill(Color.white);
 
-        SaxionApp.drawBorderedText("Blacksmith", 40, 42, 75);
-        SaxionApp.drawBorderedText("1 Smelting",40, 149, 55);
-        SaxionApp.drawBorderedText("2 Smithing",40, 234, 55);
-        SaxionApp.drawBorderedText("0 Back", 10, 480, 50);
+        SaxionApp.drawBorderedText("Blacksmith", 40, 92, 75);
+        SaxionApp.drawBorderedText("1 Smelting",40, 199, 55);
+        SaxionApp.drawBorderedText("2 Smithing",40, 284, 55);
+        SaxionApp.drawBorderedText("0 Back", 10, 630, 50);
     }
 
     public boolean BlacksmithClick(){
@@ -521,69 +521,69 @@ public class Application implements Runnable {
         SaxionApp.setBorderColor(Color.white);
         SaxionApp.setFill(background);
 
-        SaxionApp.drawRectangle(25, 25, 680, 100);
-        SaxionApp.drawRectangle(25, 135, 680, 75);
-        SaxionApp.drawRectangle(25, 220, 680, 75);
-        SaxionApp.drawRectangle(25, 305, 680, 75);
-        SaxionApp.drawRectangle(5, 475, 165, 50);
+        SaxionApp.drawRectangle(25, 75, 680, 100);
+        SaxionApp.drawRectangle(25, 185, 680, 75);
+        SaxionApp.drawRectangle(25, 270, 680, 75);
+        SaxionApp.drawRectangle(25, 355, 680, 75);
+        SaxionApp.drawRectangle(5, 625, 165, 50);
 
         //design tekst
         SaxionApp.turnBorderOff();
         SaxionApp.setFill(Color.white);
 
-        SaxionApp.drawBorderedText("Smithing", 40, 42, 75);
-        SaxionApp.drawBorderedText("1 Iron pickaxe",40, 149, 55);
-        SaxionApp.drawBorderedText("2 Bronze pickaxe",40, 234, 55);
-        SaxionApp.drawBorderedText("3 Diamond pickaxe",40, 319, 55);
+        SaxionApp.drawBorderedText("Smithing", 40, 92, 75);
+        SaxionApp.drawBorderedText("1 Iron pickaxe",40, 199, 55);
+        SaxionApp.drawBorderedText("2 Bronze pickaxe",40, 284, 55);
+        SaxionApp.drawBorderedText("3 Diamond pickaxe",40, 369, 55);
 
-        SaxionApp.drawImage("Graphics/IronIngot.png", 510, 140, 70, 70);
-        SaxionApp.drawImage("Graphics/BronzeIngot.png", 510, 225, 70, 70);
-        SaxionApp.drawImage("Graphics/Diamond.png", 510, 310, 70, 70);
+        SaxionApp.drawImage("Graphics/IronIngot.png", 510, 190, 70, 70);
+        SaxionApp.drawImage("Graphics/BronzeIngot.png", 510, 275, 70, 70);
+        SaxionApp.drawImage("Graphics/Diamond.png", 510, 360, 70, 70);
 
         if((inventory[16]-inventory[17]) < 10){ //iron ingot
             SaxionApp.setFill(Color.red);
         }
-        SaxionApp.drawBorderedText("10", 570, 153, 50);
+        SaxionApp.drawBorderedText("10", 570, 203, 50);
         SaxionApp.setFill(Color.white);
 
         if((inventory[22]-inventory[23]) < 10){ //bronze ingot
             SaxionApp.setFill(Color.red);
         }
-        SaxionApp.drawBorderedText("10", 570, 238, 50);
+        SaxionApp.drawBorderedText("10", 570, 288, 50);
         SaxionApp.setFill(Color.white);
 
         if((inventory[14]-inventory[15]) < 3){ //diamond
             SaxionApp.setFill(Color.red);
         }
-        SaxionApp.drawBorderedText("3", 570, 323, 50);
+        SaxionApp.drawBorderedText("3", 570, 373, 50);
         SaxionApp.setFill(Color.white);
 
         //inventory draw
-        SaxionApp.drawBorderedText("Inventory", 720, 42, 60);
-        SaxionApp.drawImage("Graphics/IronIngot.png", 705, 123, 100, 100);
-        SaxionApp.drawImage("Graphics/BronzeIngot.png", 705, 208, 100, 100);
-        SaxionApp.drawImage("Graphics/Diamond.png", 705, 293, 100, 100);
+        SaxionApp.drawBorderedText("Inventory", 720, 92, 60);
+        SaxionApp.drawImage("Graphics/IronIngot.png", 705, 173, 100, 100);
+        SaxionApp.drawImage("Graphics/BronzeIngot.png", 705, 258, 100, 100);
+        SaxionApp.drawImage("Graphics/Diamond.png", 705, 343, 100, 100);
 
         if(inventory[16]-inventory[17] > 99){
-            SaxionApp.drawBorderedText("99", 790, 149, 50);
+            SaxionApp.drawBorderedText("99", 790, 199, 50);
         }
         else{
-            SaxionApp.drawBorderedText(String.valueOf(inventory[16]-inventory[17]),790, 149, 50);
+            SaxionApp.drawBorderedText(String.valueOf(inventory[16]-inventory[17]),790, 199, 50);
         }
         if(inventory[22]-inventory[23] > 99){
-            SaxionApp.drawBorderedText("99", 790, 149, 50);
+            SaxionApp.drawBorderedText("99", 790, 284, 50);
         }
         else{
-            SaxionApp.drawBorderedText(String.valueOf(inventory[22]-inventory[23]),790, 234, 50);
+            SaxionApp.drawBorderedText(String.valueOf(inventory[22]-inventory[23]),790, 284, 50);
         }
         if(inventory[14]-inventory[15] > 99){
-            SaxionApp.drawBorderedText("99", 790, 149, 50);
+            SaxionApp.drawBorderedText("99", 790, 369, 50);
         }
         else{
-            SaxionApp.drawBorderedText(String.valueOf(inventory[14]-inventory[15]),790, 319, 50);
+            SaxionApp.drawBorderedText(String.valueOf(inventory[14]-inventory[15]),790, 369, 50);
         }
 
-        SaxionApp.drawBorderedText("0 Back", 10, 480, 50);
+        SaxionApp.drawBorderedText("0 Back", 10, 630, 50);
     }
 
     public boolean SmithingClick(){
