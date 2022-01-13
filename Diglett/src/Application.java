@@ -755,44 +755,38 @@ public class Application implements Runnable {
             int Levelchoice = SaxionApp.readChar();
 
             if (Levelchoice == '1') { //mine 1
-                SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 1;
                 createLevel(level);
 
             } else if (Levelchoice == '2') { //mine 2
-                SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 2;
                 createLevel(level);
 
             } else if (Levelchoice == '3') { // mine 3
-                SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 3;
                 createLevel(level);
 
             } else if (Levelchoice == '4') { // mine 4
-                SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 4;
                 createLevel(level);
 
             } else if (Levelchoice == '5') { // mine 5
-                SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 5;
                 createLevel(level);
 
             } else if (Levelchoice == '6') { // mine 6
-                SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 6;
                 createLevel(level);
 
             } else if (Levelchoice == '7') { // mine 7
-                SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 7;
                 createLevel(level);
 
             } else if (Levelchoice == '8') { // mine 8
-                SaxionApp.setBackgroundColor(SaxionApp.createColor(141, 141, 141));
                 int level = 8;
                 createLevel(level);
+
+            } else if (Levelchoice == '9') {
 
             } else if (Levelchoice == '0') {
                 SelectLevelRunning = false;
