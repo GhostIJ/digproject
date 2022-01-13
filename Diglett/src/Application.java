@@ -651,13 +651,13 @@ public class Application implements Runnable {
             } else if (GameMenuChoice == '2') { //Inventory
 
             } else if (GameMenuChoice == '3') { //Blacksmith
-                boolean smeltingRunning = true;
-                while (smeltingRunning) {
-                    DrawSmelting();
-                    smeltingRunning = smeltingClick();
+                boolean blacksmithRunning = true;
+                while (blacksmithRunning) {
+                    DrawBlacksmith();
+                    blacksmithRunning = BlacksmithClick();
                 }
             } else if (GameMenuChoice == '4') { //Options
-                Options(SelectGameMenu);
+                Options();
                 SelectGameMenu = false;
             } /*else if (GameMenuChoice == '0') { //exit game test
                 SelectGameMenu = false;
@@ -665,7 +665,7 @@ public class Application implements Runnable {
         }
     }
 
-    public void Options(boolean SelectGameMenu) {
+    public void Options() {
 
         boolean OptionsRunning = true;
         while (OptionsRunning) {
