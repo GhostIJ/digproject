@@ -20,7 +20,8 @@ public class Application implements Runnable {
     int[] newItems = new int[8]; //coal, iron, copper, tin, sapphire, ruby, emerald, diamond
     Color background = SaxionApp.createColor(212, 136, 198);
     boolean runAfterLoadSave = true;
-    int pickaxe = 0;
+    int pickaxeLevel = 0;
+    boolean pickaxe = true;
 
     int[] inventory = new int[24];
     /*
@@ -590,19 +591,19 @@ public class Application implements Runnable {
         switch(SaxionApp.readChar()){
             case '1':
                 if(inventory[16]-inventory[17] >= 10){
-                    pickaxe = 1;
+                    pickaxeLevel = 1;
                     inventory[17]+=10;
                 }
                 break;
             case '2':
                 if(inventory[22]-inventory[23] >= 10){
-                    pickaxe = 2;
+                    pickaxeLevel = 2;
                     inventory[23]+=10;
                 }
                 break;
             case '3':
                 if(inventory[14]-inventory[15] >= 3){
-                    pickaxe = 1;
+                    pickaxeLevel = 1;
                     inventory[17]+=3;
                 }
                 break;
@@ -1095,6 +1096,7 @@ public class Application implements Runnable {
             }
         }
         DrawLoadingbalk();
+        DrawSideButtons(grid);
     }
 
     public void selectAndClick(Mine[][] grid) {
@@ -1102,11 +1104,10 @@ public class Application implements Runnable {
         coords[0] = (int) ((rows / 2) + 0.5); //is 15/2 = 7.5+0.5 = 8-1 = 7
         coords[1] = (int) ((column / 2) + 0.5) - 1; //is 12/2 = 6+0.5 = 6.5-1 = 5.5(afgerond 5)
         SaxionApp.drawImage("Graphics/Crosshair.png", (coords[0] - 1) * 64, (coords[1] - 1) * 64, 64, 64);
-        boolean pickaxe = true;
         int Mined = 0;
         boolean IsLoadingbalkFull = false;
 
-        while (!checkMinerals(grid) && !IsLoadingbalkFull) {
+        while (checkMinerals(grid) != 0 && !IsLoadingbalkFull) {
             char inputC = SaxionApp.readChar();
             switch (inputC) {
                 case 'a':       //naar links
@@ -1159,6 +1160,10 @@ public class Application implements Runnable {
                     break;
                 case 'q':
                     pickaxe = !pickaxe;
+                    drawGrid(grid);
+                    LoadingbalkUpdate(inputC, Mined);
+                    SaxionApp.drawImage("Graphics/Crosshair.png", (coords[0] - 1) * 64, (coords[1] - 1) * 64, 64, 64);
+
             }
             drawSelect(coords);
         }
@@ -1169,7 +1174,7 @@ public class Application implements Runnable {
         SaxionApp.drawImage("Graphics/Crosshair.png", (coords[0]-1)*64, (coords[1]-1)*64, 64, 64);
     }
 
-    public boolean checkMinerals(Mine[][] grid){
+    public int checkMinerals(Mine[][] grid){
         Arrays.fill(newItems, 0);
         clearedMinerals = 0;
         for(int row = 1; row < grid.length-1; row++) {
@@ -1227,11 +1232,12 @@ public class Application implements Runnable {
                 }
             }
         }
-        return clearedMinerals == randomMinerals;
+        return randomMinerals - clearedMinerals;
     }
 
     public void LoadingbalkUpdate(char inputC, int Mined) {
-        if (inputC == 'e') {
+        if (inputC == 'e' || inputC == 'q') {
+            SaxionApp.setFill(Color.green);
             SaxionApp.drawRectangle(5, 645, 2 + (20 * Mined), 30);
         }
     }
@@ -1239,6 +1245,38 @@ public class Application implements Runnable {
     public void DrawLoadingbalk() {
         SaxionApp.setFill(Color.green);
         SaxionApp.drawRectangle(5, 645, 2, 30);
+    }
+
+    public void DrawSideButtons(Mine[][] grid){
+        switch (checkMinerals(grid)) {
+            case 0 -> SaxionApp.drawImage("Graphics/Counter0.png", 842, 10, 220, 220);
+            case 1 -> SaxionApp.drawImage("Graphics/Counter1.png", 842, 10, 220, 220);
+            case 2 -> SaxionApp.drawImage("Graphics/Counter2.png", 842, 10, 220, 220);
+            case 3 -> SaxionApp.drawImage("Graphics/Counter3.png", 842, 10, 220, 220);
+            case 4 -> SaxionApp.drawImage("Graphics/Counter4.png", 842, 10, 220, 220);
+            case 5 -> SaxionApp.drawImage("Graphics/Counter5.png", 842, 10, 220, 220);
+        }
+
+        SaxionApp.setFill(Color.white);
+        SaxionApp.drawBorderedText("Switch: Q",842, 300, 50);
+
+        if(pickaxe){
+            switch (pickaxeLevel) {
+                case 0 -> SaxionApp.drawImage("Graphics/Pickaxe.png", 842, 340, 220, 220);
+                case 1 -> SaxionApp.drawImage("Graphics/IronPickaxe.png", 842, 340, 220, 220);
+                case 2 -> SaxionApp.drawImage("Graphics/BronzePickaxe.png", 842, 340, 220, 220);
+                case 3 -> SaxionApp.drawImage("Graphics/DiamondPickaxe.png", 842, 340, 220, 220);
+            }
+        }
+        else {
+            switch (pickaxeLevel) {
+                case 0 -> SaxionApp.drawImage("Graphics/Hammer.png", 842, 340, 220, 220);
+                case 1 -> SaxionApp.drawImage("Graphics/IronHammer.png", 842, 340, 220, 220);
+                case 2 -> SaxionApp.drawImage("Graphics/BronzeHammer.png", 842, 340, 220, 220);
+                case 3 -> SaxionApp.drawImage("Graphics/DiamondHammer.png", 842, 340, 220, 220);
+            }
+        }
+        SaxionApp.drawBorderedText("Break: E",842, 560, 50);
     }
     /*
     Mining levels einde
