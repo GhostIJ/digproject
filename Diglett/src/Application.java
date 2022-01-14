@@ -1038,9 +1038,9 @@ public class Application implements Runnable {
 
     public void drawGrid(Mine[][] grid){
         SaxionApp.clear();
-        for(int row = 1; row < grid.length-1; row+=2) {
-            for (int col = 1; col < grid[row].length - 1; col+=2) {
-                SaxionApp.drawImage("Graphics/Background.png", (row - 1) * 64, (col - 1) * 64, 128, 128);
+        for(int row = 1; row < grid.length-1; row+=1) {
+            for (int col = 1; col < grid[row].length - 1; col+=1) {
+                SaxionApp.drawImage("Graphics/Background.png", (row - 1) * 64, (col - 1) * 64, 64, 64);
             }
         }
         for(int row = 1; row < grid.length-1; row++){
