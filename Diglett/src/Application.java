@@ -150,15 +150,11 @@ public class Application implements Runnable {
     }
 
     public boolean saveToFile(){
-
-        SaxionApp.clear();
-
         boolean savingData = true;
         while (savingData){
             int fileNumber = 0;
             boolean saving = true;
             while (saving){
-                SaxionApp.printLine("Which file do you want to save in?(1,2 or 3. Press E to exit)");
                 switch (SaxionApp.readChar()) {
                     case '1' -> {
                         fileNumber = 1;
@@ -172,11 +168,10 @@ public class Application implements Runnable {
                         fileNumber = 3;
                         saving = false;
                     }
-                    case 'e' -> {
+                    case '0' -> {
                         saving = false;
                         savingData = false;
                     }
-                    default -> SaxionApp.printLine("Please choose 1, 2, 3 or E");
                 }
             }
             if(fileNumber != 0){
@@ -207,8 +202,8 @@ public class Application implements Runnable {
                         }
 
                         SaxionApp.printLine();
-                        SaxionApp.printLine("Data saved to save file \""+fileNumber+"\"");
-                        SaxionApp.pause();
+                        SaxionApp.printLine("Data saved to save file \""+fileNumber+"\". Press any key to continue.");
+                        SaxionApp.readChar();
                         SaxionApp.removeLastPrint();
                         savingData = false;
                     }
@@ -240,14 +235,14 @@ public class Application implements Runnable {
                             }
 
                             SaxionApp.printLine();
-                            SaxionApp.printLine("Data saved to save file \""+fileNumber+"\"");
-                            SaxionApp.pause();
+                            SaxionApp.printLine("Data saved to save file \""+fileNumber+"\". Press any key to continue.");
+                            SaxionApp.readChar();
                             SaxionApp.removeLastPrint();
                             savingData = false;
                         }
                         else{
-                            SaxionApp.printLine("Data wasn't saved");
-                            SaxionApp.pause();
+                            SaxionApp.printLine("Data wasn't saved. Press any key to continue.");
+                            SaxionApp.readChar();
                             SaxionApp.removeLastPrint();
                         }
                     }
@@ -261,8 +256,6 @@ public class Application implements Runnable {
                 }
             }
         }
-        SaxionApp.printLine("Press any key to continue");
-        SaxionApp.readChar();
         return false;
     }
 
@@ -290,12 +283,6 @@ public class Application implements Runnable {
                         loadingData = false;
                         runAfterLoadSave = false;
                     }
-                    default -> {
-                        SaxionApp.printLine("Please try again.");
-                        SaxionApp.pause();
-                        SaxionApp.removeLastPrint();
-                    }
-
                 }
             }
             if(fileNumber != 0){
@@ -310,12 +297,12 @@ public class Application implements Runnable {
                         inventory[i] = readFile.getInt(i);
                     }
                     loadingData = false;
-                    SaxionApp.printLine("File loaded successfully!");
-                    SaxionApp.pause();
+                    SaxionApp.printLine("File loaded successfully! Press any key to continue.");
+                    SaxionApp.readChar();
                 }
                 else {
-                    SaxionApp.printLine("There wasn't a file loaded in slot "+fileNumber);
-                    SaxionApp.pause();
+                    SaxionApp.printLine("There wasn't a file loaded in slot "+fileNumber+". Press any key to continue.");
+                    SaxionApp.readChar();
                     SaxionApp.removeLastPrint();
                 }
             }
@@ -698,7 +685,7 @@ public class Application implements Runnable {
             int OptionChoice = SaxionApp.readChar();
 
             if (OptionChoice == '1') { //Save game
-
+                drawLoadSave(false);
             } else if (OptionChoice =='2') { //Stats
 
             } else if (OptionChoice == '3') { //Quit game
@@ -807,9 +794,8 @@ public class Application implements Runnable {
         //voeg items toe aan inventory
         for(int i = 0; i<newItems.length; i++){
             inventory[(i*2)] = inventory[(i*2)] + newItems[i];
+            
         }
-        saveToFile();
-
     }
 
     public Mine[][] createGrid(int level){
