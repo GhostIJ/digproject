@@ -20,10 +20,9 @@ public class Application implements Runnable {
     int[] newItems = new int[9]; //coal, iron, copper, tin, sapphire, ruby, emerald, diamond, holy stone
     Color background = SaxionApp.createColor(212, 136, 198);
     boolean runAfterLoadSave = true;
-    int pickaxeLevel = 3;
     boolean pickaxe = true;
 
-    int[] inventory = new int[24];
+    int[] inventory = new int[26];
     /*
     coalget, coalused, (0 1)
     ironoreget, ironoreused, (2 3)
@@ -37,6 +36,8 @@ public class Application implements Runnable {
     copperbarget, copperbarused, (18 19)
     tinbarget, tinbarused, (20 21)
     bronzebarget, bronzebarused, (22 23)
+    holy stone (24)
+    pickaxe level (25)
     */
 
 
@@ -578,19 +579,19 @@ public class Application implements Runnable {
         switch(SaxionApp.readChar()){
             case '1':
                 if(inventory[16]-inventory[17] >= 10){
-                    pickaxeLevel = 1;
+                    inventory[25] = 1;
                     inventory[17]+=10;
                 }
                 break;
             case '2':
                 if(inventory[22]-inventory[23] >= 10){
-                    pickaxeLevel = 2;
+                    inventory[25] = 2;
                     inventory[23]+=10;
                 }
                 break;
             case '3':
                 if(inventory[14]-inventory[15] >= 3){
-                    pickaxeLevel = 1;
+                    inventory[25] = 1;
                     inventory[17]+=3;
                 }
                 break;
@@ -1276,25 +1277,26 @@ public class Application implements Runnable {
         }
 
         SaxionApp.setFill(Color.white);
-        SaxionApp.drawBorderedText("Switch: Q",842, 300, 50);
+        SaxionApp.drawBorderedText("Switch: Q",842, 250, 50);
 
         if(pickaxe){
-            switch (pickaxeLevel) {
-                case 0 -> SaxionApp.drawImage("Graphics/Pickaxe.png", 842, 340, 220, 220);
-                case 1 -> SaxionApp.drawImage("Graphics/IronPickaxe.png", 842, 340, 220, 220);
-                case 2 -> SaxionApp.drawImage("Graphics/BronzePickaxe.png", 842, 340, 220, 220);
-                case 3 -> SaxionApp.drawImage("Graphics/DiamondPickaxe.png", 842, 340, 220, 220);
+            switch (inventory[25]) {
+                case 0 -> SaxionApp.drawImage("Graphics/Pickaxe.png", 842, 290, 220, 220);
+                case 1 -> SaxionApp.drawImage("Graphics/IronPickaxe.png", 842, 290, 220, 220);
+                case 2 -> SaxionApp.drawImage("Graphics/BronzePickaxe.png", 842, 290, 220, 220);
+                case 3 -> SaxionApp.drawImage("Graphics/DiamondPickaxe.png", 842, 290, 220, 220);
             }
         }
         else {
-            switch (pickaxeLevel) {
-                case 0 -> SaxionApp.drawImage("Graphics/Hammer.png", 842, 340, 220, 220);
-                case 1 -> SaxionApp.drawImage("Graphics/IronHammer.png", 842, 340, 220, 220);
-                case 2 -> SaxionApp.drawImage("Graphics/BronzeHammer.png", 842, 340, 220, 220);
-                case 3 -> SaxionApp.drawImage("Graphics/DiamondHammer.png", 842, 340, 220, 220);
+            switch (inventory[25]) {
+                case 0 -> SaxionApp.drawImage("Graphics/Hammer.png", 842, 290, 220, 220);
+                case 1 -> SaxionApp.drawImage("Graphics/IronHammer.png", 842, 290, 220, 220);
+                case 2 -> SaxionApp.drawImage("Graphics/BronzeHammer.png", 842, 290, 220, 220);
+                case 3 -> SaxionApp.drawImage("Graphics/DiamondHammer.png", 842, 290, 220, 220);
             }
         }
-        SaxionApp.drawBorderedText("Break: E",842, 560, 50);
+        SaxionApp.drawBorderedText("Break: E",842, 510, 50);
+        SaxionApp.drawBorderedText("Move: WASD",842, 570, 35);
     }
     /*
     Mining levels einde
