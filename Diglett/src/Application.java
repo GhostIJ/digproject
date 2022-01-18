@@ -775,6 +775,8 @@ public class Application implements Runnable {
                 createLevel(level);
 
             } else if (Levelchoice == '9') {
+                int level = 9;
+                createLevel(level);
 
             } else if (Levelchoice == '0') {
                 SelectLevelRunning = false;
@@ -891,6 +893,14 @@ public class Application implements Runnable {
                             newValue.rocks = 6; //70%
                         }
                     }
+                    case 9 -> {
+                        rock = (SaxionApp.getRandomValueBetween(1, 11));
+                        if (rock == 1) {
+                            newValue.rocks = 5; //10%
+                        } else {
+                            newValue.rocks = 6; //90%
+                        }
+                    }
                 }
 
                 newValue.minerals = "x";
@@ -965,7 +975,10 @@ public class Application implements Runnable {
                     coalChance = 100; //55%
                 }
                 case 9 -> {
-                    holyChance = 1;
+                    holyChance = 1; //1%
+                    diamondChance = 7; //6%
+                    tinChance = 46; //40%
+                    ironChance = 100; //54%
                 }
             }
 
