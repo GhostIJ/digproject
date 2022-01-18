@@ -17,10 +17,10 @@ public class Application implements Runnable {
     int column = 10+2;
     int randomMinerals;
     int clearedMinerals;
-    int[] newItems = new int[8]; //coal, iron, copper, tin, sapphire, ruby, emerald, diamond
+    int[] newItems = new int[9]; //coal, iron, copper, tin, sapphire, ruby, emerald, diamond, holy stone
     Color background = SaxionApp.createColor(212, 136, 198);
     boolean runAfterLoadSave = true;
-    int pickaxeLevel = 0;
+    int pickaxeLevel = 3;
     boolean pickaxe = true;
 
     int[] inventory = new int[24];
@@ -794,7 +794,7 @@ public class Application implements Runnable {
         //voeg items toe aan inventory
         for(int i = 0; i<newItems.length; i++){
             inventory[(i*2)] = inventory[(i*2)] + newItems[i];
-            
+
         }
     }
 
@@ -917,6 +917,7 @@ public class Application implements Runnable {
             int rubyChance = 0;
             int emeraldChance = 0;
             int diamondChance = 0;
+            int holyChance = 0;
 
             switch (level) {
                 case 1 -> { //in procenten
@@ -963,11 +964,20 @@ public class Application implements Runnable {
                     tinChance = 45; //30%
                     coalChance = 100; //55%
                 }
+                case 9 -> {
+                    holyChance = 1;
+                }
             }
 
             if(grid[randomX][randomY].minerals.equals("x") && grid[randomX+1][randomY].minerals.equals("x") && grid[randomX][randomY+1].minerals.equals("x") && grid[randomX+1][randomY+1].minerals.equals("x")){ //check if all of the spaces are empty
                 int randomMineral = SaxionApp.getRandomValueBetween(1, 101);
-                if(randomMineral <= diamondChance){
+                if(randomMineral <= holyChance){
+                    grid[randomX][randomY].minerals = "HolyStone1";
+                    grid[randomX+1][randomY].minerals = "HolyStone2";
+                    grid[randomX][randomY+1].minerals = "HolyStone3";
+                    grid[randomX+1][randomY+1].minerals = "HolyStone4";
+                }
+                else if(randomMineral <= diamondChance){
                     grid[randomX][randomY].minerals = "Diamond1";
                     grid[randomX+1][randomY].minerals = "Diamond2";
                     grid[randomX][randomY+1].minerals = "Diamond3";
@@ -1056,6 +1066,9 @@ public class Application implements Runnable {
                 }
                 else if(grid[row][col].minerals.equals("Sapphire1")){
                     SaxionApp.drawImage("Graphics/Sapphire.png",(row-1)*64,(col-1)*64,128,128);
+                }
+                else if(grid[row][col].minerals.equals("HolyStone1")){
+                    SaxionApp.drawImage("Graphics/HolyStone.png",(row-1)*64,(col-1)*64,128,128);
                 }
 
                 if(grid[row][col].rocks == 6){
@@ -1213,6 +1226,12 @@ public class Application implements Runnable {
                         if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
                             clearedMinerals++;
                             newItems[7]++;
+                        }
+                        break;
+                    case "HolyStone1":
+                        if (grid[row][col].cleared && grid[row + 1][col].cleared && grid[row][col + 1].cleared && grid[row + 1][col + 1].cleared) {
+                            clearedMinerals++;
+                            newItems[8]++;
                         }
                         break;
                 }
