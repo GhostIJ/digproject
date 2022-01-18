@@ -638,7 +638,11 @@ public class Application implements Runnable {
             if (GameMenuChoice == '1') { //Mines
                 SelectLevel();
             } else if (GameMenuChoice == '2') { //Inventory
-
+                boolean inventoryRunning = true;
+                while (inventoryRunning){
+                    drawInventory();
+                    inventoryRunning = inventoryClick();
+                }
             } else if (GameMenuChoice == '3') { //Blacksmith
                 boolean blacksmithRunning = true;
                 while (blacksmithRunning) {
@@ -795,9 +799,23 @@ public class Application implements Runnable {
         selectAndClick(grid);
 
         //voeg items toe aan inventory
+        drawInventory();
+        SaxionApp.turnBorderOff();
+        SaxionApp.setFill(Color.white);
+        SaxionApp.drawBorderedText("You gathered the following items:", 25, 15, 50);
+        int j = 210;
+        for(int i = 0; i<newItems.length; i++){
+            if(i<= 3){
+                SaxionApp.drawBorderedText("+"+String.valueOf(newItems[i]),225,j,90);
+            }
+            else if(i<=7){
+                SaxionApp.drawBorderedText("+"+String.valueOf(newItems[i]),925,j-400,90);
+            }
+            j+=100;
+        }
+        SaxionApp.readChar();
         for(int i = 0; i<newItems.length; i++){
             inventory[(i*2)] = inventory[(i*2)] + newItems[i];
-
         }
     }
 
@@ -1301,4 +1319,72 @@ public class Application implements Runnable {
     /*
     Mining levels einde
     */
+    public void drawInventory(){
+        SaxionApp.clear();
+
+        //achtergrond kleur en tekst kleur
+        SaxionApp.setBackgroundColor(background);
+        SaxionApp.setBorderSize(4);
+        SaxionApp.setBorderColor(Color.white);
+        SaxionApp.setFill(background);
+
+        SaxionApp.drawRectangle(25, 75, 680, 100);
+        SaxionApp.drawRectangle(5, 625 , 165, 50);
+
+        SaxionApp.drawImage("Graphics/Coal.png",25,200, 100, 100);
+        SaxionApp.drawImage("Graphics/IronOre.png",25,300, 100, 100);
+        SaxionApp.drawImage("Graphics/CopperOre.png",25,400, 100, 100);
+        SaxionApp.drawImage("Graphics/TinOre.png",25,500, 100, 100);
+        SaxionApp.drawImage("Graphics/IronIngot.png",375,200, 100, 100);
+        SaxionApp.drawImage("Graphics/CopperIngot.png",375,300, 100, 100);
+        SaxionApp.drawImage("Graphics/TinIngot.png",375,400, 100, 100);
+        SaxionApp.drawImage("Graphics/BronzeIngot.png",375,500, 100, 100);
+        SaxionApp.drawImage("Graphics/Sapphire.png",725,200, 100, 100);
+        SaxionApp.drawImage("Graphics/Ruby.png",725,300, 100, 100);
+        SaxionApp.drawImage("Graphics/Emerald.png",725,400, 100, 100);
+        SaxionApp.drawImage("Graphics/Diamond.png",725,500, 100, 100);
+
+        //design tekst
+        SaxionApp.turnBorderOff();
+        SaxionApp.setFill(Color.white);
+
+        SaxionApp.drawBorderedText("Inventory", 40, 92, 75);
+        SaxionApp.drawBorderedText("0 Back", 10, 630, 50);
+        int j = 210;
+        for(int i = 0; i < 8; i+=2){
+            if(inventory[i]-inventory[i+1] < 100){
+                SaxionApp.drawBorderedText(String.valueOf(inventory[i]-inventory[i+1]),125,j,90);
+            }
+            else {
+                SaxionApp.drawBorderedText("99",125,j,100);
+            }
+            j+=100;
+        }
+
+        j = 210;
+        for(int i = 16; i < 24; i+=2){
+            if(inventory[i]-inventory[i+1] < 100){
+                SaxionApp.drawBorderedText(String.valueOf(inventory[i]-inventory[i+1]),475,j,90);
+            }
+            else {
+                SaxionApp.drawBorderedText("99",475,j,100);
+            }
+            j+=100;
+        }
+
+        j = 210;
+        for(int i = 8; i < 16; i+=2){
+            if(inventory[i]-inventory[i+1] < 100){
+                SaxionApp.drawBorderedText(String.valueOf(inventory[i]-inventory[i+1]),825,j,90);
+            }
+            else {
+                SaxionApp.drawBorderedText("99",825,j,100);
+            }
+            j+=100;
+        }
+    }
+
+    public boolean inventoryClick(){
+        return SaxionApp.readChar() != '0';
+    }
 }
