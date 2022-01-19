@@ -1322,18 +1322,18 @@ public class Application implements Runnable {
     }
 
     public void LoadingbalkUpdate(char inputC, int Mined) {
-        if (inputC == 'e' || inputC == 'q' && inventory[25] == 0) { //Pickaxe
+        if ((inputC == 'e' || inputC == 'q') && inventory[25] == 0) { //Pickaxe
             SaxionApp.setFill(Color.green);
             SaxionApp.drawRectangle(5, 645, (int) (2 + (41 * Mined)), 30);
             System.out.print(Mined);
-        } else if (inventory[25] == 1 && (inputC == 'e' || inputC == 'q')) { //Iron pickaxe
+        } else if ((inputC == 'e' || inputC == 'q') && inventory[25] == 1) { //Iron pickaxe
             SaxionApp.setFill(Color.green);
             SaxionApp.drawRectangle(5, 645, 2 + (27 * Mined), 30);
             System.out.print(Mined);
-        } else if (inputC == 'e' || inputC == 'q' && inventory[25] == 2) { //Bronze pickaxe
+        } else if ((inputC == 'e' || inputC == 'q') && inventory[25] == 2) { //Bronze pickaxe
             SaxionApp.setFill(Color.green);
             SaxionApp.drawRectangle(5, 645, (int) (2 + (20.5 * Mined)), 30);
-        } else if (inputC == 'e' || inputC == 'q' && inventory[25] == 3) { //Diamond pickaxe
+        } else if ((inputC == 'e' || inputC == 'q') && inventory[25] == 3) { //Diamond pickaxe
             SaxionApp.setFill(Color.green);
             SaxionApp.drawRectangle(5, 645, (int) (2 + (13.6 * Mined)), 30);
         }
