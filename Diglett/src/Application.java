@@ -104,6 +104,7 @@ public class Application implements Runnable {
     /*
     Load en save
     */
+
     public void drawLoadSave(boolean isLoad){
         boolean selectLoadSave = true;
         while (selectLoadSave){
@@ -307,6 +308,7 @@ public class Application implements Runnable {
         }
         return false;
     }
+
     /*
     Load en save einde
     */
@@ -599,8 +601,13 @@ public class Application implements Runnable {
     }
 
     /*
-    Mining levels
+    Blacksmith einde
+     */
+
+    /*
+    Menu's
     */
+
     public void GameMenu() {
 
         boolean SelectGameMenu = true;
@@ -649,9 +656,7 @@ public class Application implements Runnable {
             } else if (GameMenuChoice == '4') { //Options
                 Options();
                 SelectGameMenu = false;
-            } /*else if (GameMenuChoice == '0') { //exit game test
-                SelectGameMenu = false;
-            }*/
+            }
         }
     }
 
@@ -679,7 +684,7 @@ public class Application implements Runnable {
             SaxionApp.drawBorderedText("1", 386, 240, 50);
             SaxionApp.drawBorderedText("Save Game", 426, 240, 50);
             SaxionApp.drawBorderedText("2", 386, 340, 50);
-            SaxionApp.drawBorderedText("Stats", 436, 340, 50);
+            SaxionApp.drawBorderedText("Help", 436, 340, 50);
             SaxionApp.drawBorderedText("3", 386, 440, 50);
             SaxionApp.drawBorderedText("Quit Game", 436, 440, 50);
             SaxionApp.drawBorderedText("0 Back", 446, 605, 50);
@@ -688,14 +693,47 @@ public class Application implements Runnable {
 
             if (OptionChoice == '1') { //Save game
                 drawLoadSave(false);
-            } else if (OptionChoice =='2') { //Stats
-
+            } else if (OptionChoice =='2') { //Help screen
+                HelpScreen();
             } else if (OptionChoice == '3') { //Quit game
                 OptionsRunning = false;
-
             } else if (OptionChoice == '0') { //Back
                 OptionsRunning = false;
                 GameMenu();
+            }
+        }
+    }
+
+    public void HelpScreen() {
+        boolean HelpScreenRunning = true;
+        while (HelpScreenRunning) {
+            SaxionApp.clear();
+
+            SaxionApp.setBackgroundColor(background);
+            SaxionApp.setBorderSize(4);
+            SaxionApp.setBorderColor(Color.white);
+            SaxionApp.setFill(background);
+
+            SaxionApp.drawRectangle(136, 73, 800, 575);
+            SaxionApp.drawRectangle(443, 25, 186, 96);
+            SaxionApp.drawRectangle(449, 623, 175, 50);
+
+            SaxionApp.turnBorderOff();
+            SaxionApp.setFill(Color.white);
+
+            SaxionApp.drawBorderedText("Help", 453, 35, 80);
+            SaxionApp.drawBorderedText("0 Back", 454, 628, 50);
+            SaxionApp.drawBorderedText("Moving in Mine: WASD", 145, 150, 50);
+            SaxionApp.drawBorderedText("Break stone: E", 145, 200, 50);
+            SaxionApp.drawBorderedText("Change Equipped Tool: Q", 145, 250, 50);
+            SaxionApp.drawBorderedText("The Counter: Shows how many", 145, 300, 50);
+            SaxionApp.drawBorderedText("materials you can find in this level.", 145, 350, 50);
+
+
+            int HelpBack = SaxionApp.readChar();
+
+            if (HelpBack == '0') {
+                HelpScreenRunning = false;
             }
         }
     }
@@ -786,6 +824,14 @@ public class Application implements Runnable {
         }
 
     }
+
+    /*
+    Einde Menu's
+     */
+
+    /*
+    Mining Levels
+     */
 
     public void createLevel(int level){
 
@@ -1181,7 +1227,13 @@ public class Application implements Runnable {
 
                     drawGrid(grid);
                     LoadingbalkUpdate(inputC, Mined);
-                    if  (Mined >= 41) {
+                    if  (inventory[25] == 0 && Mined >= 20) { //Normal
+                        IsLoadingbalkFull = true;
+                    } else if (inventory[25] == 1 && Mined >= 30) { //Iron
+                        IsLoadingbalkFull = true;
+                    } else if (inventory[25] == 2 && Mined >= 40) { //Bronze
+                        IsLoadingbalkFull = true;
+                    } else if (inventory[25] == 3 && Mined >= 60) { //Diamond
                         IsLoadingbalkFull = true;
                     }
                     SaxionApp.drawImage("Graphics/Crosshair.png", (coords[0] - 1) * 64, (coords[1] - 1) * 64, 64, 64);
@@ -1270,9 +1322,20 @@ public class Application implements Runnable {
     }
 
     public void LoadingbalkUpdate(char inputC, int Mined) {
-        if (inputC == 'e' || inputC == 'q') {
+        if (inputC == 'e' || inputC == 'q' && inventory[25] == 0) { //Pickaxe
             SaxionApp.setFill(Color.green);
-            SaxionApp.drawRectangle(5, 645, 2 + (20 * Mined), 30);
+            SaxionApp.drawRectangle(5, 645, (int) (2 + (41 * Mined)), 30);
+            System.out.print(Mined);
+        } else if (inventory[25] == 1 && (inputC == 'e' || inputC == 'q')) { //Iron pickaxe
+            SaxionApp.setFill(Color.green);
+            SaxionApp.drawRectangle(5, 645, 2 + (27 * Mined), 30);
+            System.out.print(Mined);
+        } else if (inputC == 'e' || inputC == 'q' && inventory[25] == 2) { //Bronze pickaxe
+            SaxionApp.setFill(Color.green);
+            SaxionApp.drawRectangle(5, 645, (int) (2 + (20.5 * Mined)), 30);
+        } else if (inputC == 'e' || inputC == 'q' && inventory[25] == 3) { //Diamond pickaxe
+            SaxionApp.setFill(Color.green);
+            SaxionApp.drawRectangle(5, 645, (int) (2 + (13.6 * Mined)), 30);
         }
     }
 
