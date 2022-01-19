@@ -728,7 +728,9 @@ public class Application implements Runnable {
             SaxionApp.drawBorderedText("Change Equipped Tool: Q", 145, 250, 50);
             SaxionApp.drawBorderedText("The Counter: Shows how many", 145, 300, 50);
             SaxionApp.drawBorderedText("materials you can find in this level.", 145, 350, 50);
-
+            SaxionApp.drawBorderedText("LoadingBar: When the bar fills the", 145, 400, 50);
+            SaxionApp.drawBorderedText("length of the screen, then the mine", 145, 450, 50);
+            SaxionApp.drawBorderedText("will collapse and the level will end", 145, 500, 50);
 
             int HelpBack = SaxionApp.readChar();
 
