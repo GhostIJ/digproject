@@ -18,7 +18,7 @@ public class Application implements Runnable {
     int randomMinerals;
     int clearedMinerals;
     int[] newItems = new int[9]; //coal, iron, copper, tin, sapphire, ruby, emerald, diamond, holy stone
-    Color background = SaxionApp.createColor(212, 136, 198);
+    Color background = SaxionApp.createColor(237, 164, 224);
     boolean runAfterLoadSave = true;
     boolean pickaxe = true;
 
