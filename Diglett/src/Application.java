@@ -50,17 +50,21 @@ public class Application implements Runnable {
     public void MainMenu() {
 
         //menu functionaliteit
+        SaxionApp.setBackgroundColor(background);
+        SaxionApp.drawImage("Graphics/TitleScreen.png",32, 40, 1008, 600);
+        SaxionApp.readChar();
+
         boolean menuRunning = true;
         while (menuRunning){
             SaxionApp.clear();
 
             //Achtergrond kleur, border uit en tekst kleur
-            SaxionApp.setBackgroundColor(background);
+
             SaxionApp.turnBorderOff();
             SaxionApp.setFill(Color.WHITE);
 
             //titel
-            SaxionApp.drawBorderedText("Titel", 50, 50, 100);
+            SaxionApp.drawBorderedText("The Holy Miner", 50, 50, 100);
 
             //keuzes in menu
             SaxionApp.drawBorderedText("1 New Game", 50, 250, 35);
@@ -93,13 +97,6 @@ public class Application implements Runnable {
                 SaxionApp.drawBorderedText("Thank You for Playing", 171, 275, 75);
                 SaxionApp.drawBorderedText("We hope to see you again", 396, 350, 25);
                 menuRunning = false;
-            } else if (MenuChoice == 't') {     //Test
-                boolean blacksmithRunning = true;
-                while (blacksmithRunning){
-                    DrawBlacksmith();
-                    blacksmithRunning = BlacksmithClick();
-                }
-
             }
         }
     }
