@@ -849,10 +849,10 @@ public class Application implements Runnable {
         int j = 210;
         for(int i = 0; i<newItems.length; i++){
             if(i<= 3){
-                SaxionApp.drawBorderedText("+"+String.valueOf(newItems[i]),225,j,90);
+                SaxionApp.drawBorderedText("+"+newItems[i],225,j,90);
             }
             else if(i<=7){
-                SaxionApp.drawBorderedText("+"+String.valueOf(newItems[i]),925,j-400,90);
+                SaxionApp.drawBorderedText("+"+newItems[i],925,j-400,90);
             }
             j+=100;
         }
@@ -1118,32 +1118,16 @@ public class Application implements Runnable {
         for(int row = 1; row < grid.length-1; row++){
             for(int col = 1; col < grid[row].length-1; col++){
 
-                if(grid[row][col].minerals.equals("Iron1")){
-                    SaxionApp.drawImage("Graphics/IronOre.png",(row-1)*64,(col-1)*64,128,128);
-                }
-                else if(grid[row][col].minerals.equals("Coal1")){
-                    SaxionApp.drawImage("Graphics/Coal.png",(row-1)*64,(col-1)*64,128,128);
-                }
-                else if(grid[row][col].minerals.equals("Diamond1")){
-                    SaxionApp.drawImage("Graphics/Diamond.png",(row-1)*64,(col-1)*64,128,128);
-                }
-                else if(grid[row][col].minerals.equals("Copper1")){
-                    SaxionApp.drawImage("Graphics/CopperOre.png",(row-1)*64,(col-1)*64,128,128);
-                }
-                else if(grid[row][col].minerals.equals("Tin1")){
-                    SaxionApp.drawImage("Graphics/TinOre.png",(row-1)*64,(col-1)*64,128,128);
-                }
-                else if(grid[row][col].minerals.equals("Emerald1")){
-                    SaxionApp.drawImage("Graphics/Emerald.png",(row-1)*64,(col-1)*64,128,128);
-                }
-                else if(grid[row][col].minerals.equals("Ruby1")){
-                    SaxionApp.drawImage("Graphics/Ruby.png",(row-1)*64,(col-1)*64,128,128);
-                }
-                else if(grid[row][col].minerals.equals("Sapphire1")){
-                    SaxionApp.drawImage("Graphics/Sapphire.png",(row-1)*64,(col-1)*64,128,128);
-                }
-                else if(grid[row][col].minerals.equals("HolyStone1")){
-                    SaxionApp.drawImage("Graphics/HolyStone.png",(row-1)*64,(col-1)*64,128,128);
+                switch (grid[row][col].minerals) {
+                    case "Iron1" -> SaxionApp.drawImage("Graphics/IronOre.png", (row - 1) * 64, (col - 1) * 64, 128, 128);
+                    case "Coal1" -> SaxionApp.drawImage("Graphics/Coal.png", (row - 1) * 64, (col - 1) * 64, 128, 128);
+                    case "Diamond1" -> SaxionApp.drawImage("Graphics/Diamond.png", (row - 1) * 64, (col - 1) * 64, 128, 128);
+                    case "Copper1" -> SaxionApp.drawImage("Graphics/CopperOre.png", (row - 1) * 64, (col - 1) * 64, 128, 128);
+                    case "Tin1" -> SaxionApp.drawImage("Graphics/TinOre.png", (row - 1) * 64, (col - 1) * 64, 128, 128);
+                    case "Emerald1" -> SaxionApp.drawImage("Graphics/Emerald.png", (row - 1) * 64, (col - 1) * 64, 128, 128);
+                    case "Ruby1" -> SaxionApp.drawImage("Graphics/Ruby.png", (row - 1) * 64, (col - 1) * 64, 128, 128);
+                    case "Sapphire1" -> SaxionApp.drawImage("Graphics/Sapphire.png", (row - 1) * 64, (col - 1) * 64, 128, 128);
+                    case "HolyStone1" -> SaxionApp.drawImage("Graphics/HolyStone.png", (row - 1) * 64, (col - 1) * 64, 128, 128);
                 }
 
                 if(grid[row][col].rocks == 6){
@@ -1324,7 +1308,7 @@ public class Application implements Runnable {
     public void LoadingbalkUpdate(char inputC, int Mined) {
         if ((inputC == 'e' || inputC == 'q') && inventory[25] == 0) { //Pickaxe
             SaxionApp.setFill(Color.green);
-            SaxionApp.drawRectangle(5, 645, (int) (2 + (41 * Mined)), 30);
+            SaxionApp.drawRectangle(5, 645, (2 + (41 * Mined)), 30);
             System.out.print(Mined);
         } else if ((inputC == 'e' || inputC == 'q') && inventory[25] == 1) { //Iron pickaxe
             SaxionApp.setFill(Color.green);
