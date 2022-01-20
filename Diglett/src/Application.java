@@ -1236,11 +1236,11 @@ public class Application implements Runnable {
 
                     drawGrid(grid);
                     LoadingbalkUpdate(inputC, Mined);
-                    if  (inventory[25] == 0 && Mined >= 20) { //Normal
+                    if  (inventory[25] == 0 && Mined >= 25) { //Normal
                         IsLoadingbalkFull = true;
-                    } else if (inventory[25] == 1 && Mined >= 30) { //Iron
+                    } else if (inventory[25] == 1 && Mined >= 35) { //Iron
                         IsLoadingbalkFull = true;
-                    } else if (inventory[25] == 2 && Mined >= 40) { //Bronze
+                    } else if (inventory[25] == 2 && Mined >= 45) { //Bronze
                         IsLoadingbalkFull = true;
                     } else if (inventory[25] == 3 && Mined >= 60) { //Diamond
                         IsLoadingbalkFull = true;
