@@ -524,6 +524,19 @@ public class Application implements Runnable {
         SaxionApp.drawBorderedText("2 Bronze pickaxe",40, 284, 55);
         SaxionApp.drawBorderedText("3 Diamond pickaxe",40, 369, 55);
 
+        if(inventory[25] == 0){
+            SaxionApp.drawBorderedText("Pickaxe: Standard", 200, 630, 50);
+        }
+        else if(inventory[25] == 1){
+            SaxionApp.drawBorderedText("Pickaxe: Iron", 200, 630, 50);
+        }
+        else if(inventory[25] == 2){
+            SaxionApp.drawBorderedText("Pickaxe: Bronze", 200, 630, 50);
+        }
+        else if(inventory[25] == 3){
+            SaxionApp.drawBorderedText("Pickaxe: Diamond", 200, 630, 50);
+        }
+
         SaxionApp.drawImage("Graphics/IronIngot.png", 510, 190, 70, 70);
         SaxionApp.drawImage("Graphics/BronzeIngot.png", 510, 275, 70, 70);
         SaxionApp.drawImage("Graphics/Diamond.png", 510, 360, 70, 70);
