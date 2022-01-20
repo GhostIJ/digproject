@@ -779,7 +779,7 @@ public class Application implements Runnable {
             SaxionApp.drawRectangle(736, 375, 125, 125);
 
             if(inventory[25] == 3){
-                SaxionApp.drawRectangle(911, 375, 125, 125);
+                SaxionApp.drawRectangle(474, 525, 125, 125);
             }
 
             //design tekst
@@ -799,7 +799,7 @@ public class Application implements Runnable {
             SaxionApp.drawBorderedText("0 Back", 10, 630, 50);
 
             if(inventory[25] == 3){
-                SaxionApp.drawBorderedText("9", 938, 385, 130);
+                SaxionApp.drawBorderedText("9", 499, 535, 130);
             }
 
 
@@ -1333,15 +1333,13 @@ public class Application implements Runnable {
     public void LoadingbalkUpdate(char inputC, int Mined) {
         if ((inputC == 'e' || inputC == 'q') && inventory[25] == 0) { //Pickaxe
             SaxionApp.setFill(Color.green);
-            SaxionApp.drawRectangle(5, 645, (2 + (41 * Mined)), 30);
-            System.out.print(Mined);
+            SaxionApp.drawRectangle(5, 645, (int) (2 + (32.8 * Mined)), 30);
         } else if ((inputC == 'e' || inputC == 'q') && inventory[25] == 1) { //Iron pickaxe
             SaxionApp.setFill(Color.green);
-            SaxionApp.drawRectangle(5, 645, 2 + (27 * Mined), 30);
-            System.out.print(Mined);
+            SaxionApp.drawRectangle(5, 645, (int) (2 + (23.4 * Mined)), 30);
         } else if ((inputC == 'e' || inputC == 'q') && inventory[25] == 2) { //Bronze pickaxe
             SaxionApp.setFill(Color.green);
-            SaxionApp.drawRectangle(5, 645, (int) (2 + (20.5 * Mined)), 30);
+            SaxionApp.drawRectangle(5, 645, (int) (2 + (18.2 * Mined)), 30);
         } else if ((inputC == 'e' || inputC == 'q') && inventory[25] == 3) { //Diamond pickaxe
             SaxionApp.setFill(Color.green);
             SaxionApp.drawRectangle(5, 645, (int) (2 + (13.6 * Mined)), 30);
