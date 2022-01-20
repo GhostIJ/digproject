@@ -425,7 +425,7 @@ public class Application implements Runnable {
 
 
         SaxionApp.drawImage("Graphics/TinIngot.png",600, 445, 70, 70);
-        if(inventory[19]-inventory[20] < 1){
+        if(inventory[20]-inventory[21] < 1){
             SaxionApp.setFill(Color.red);
         }
         SaxionApp.drawBorderedText("1",660,458,50);
@@ -577,21 +577,21 @@ public class Application implements Runnable {
     public boolean SmithingClick(){
         switch(SaxionApp.readChar()){
             case '1':
-                if(inventory[16]-inventory[17] >= 10){
+                if(inventory[16]-inventory[17] >= 10 && inventory[25] == 0){
                     inventory[25] = 1;
                     inventory[17]+=10;
                 }
                 break;
             case '2':
-                if(inventory[22]-inventory[23] >= 10){
+                if(inventory[22]-inventory[23] >= 10 && inventory[25] <= 1){
                     inventory[25] = 2;
                     inventory[23]+=10;
                 }
                 break;
             case '3':
-                if(inventory[14]-inventory[15] >= 3){
-                    inventory[25] = 1;
-                    inventory[17]+=3;
+                if(inventory[14]-inventory[15] >= 3 && inventory[25] <=2){
+                    inventory[25] = 3;
+                    inventory[15]+=3;
                 }
                 break;
             case '0':
@@ -762,8 +762,12 @@ public class Application implements Runnable {
             SaxionApp.drawRectangle(5, 625 , 165, 50);
             SaxionApp.drawRectangle(211, 375, 125 , 125);
             SaxionApp.drawRectangle(386, 375, 125, 125);
-            SaxionApp.drawRectangle(561, 375, 125, 125);
+            SaxionApp.drawRectangle(561, 375, 125, 125); //62
             SaxionApp.drawRectangle(736, 375, 125, 125);
+
+            if(inventory[25] == 3){
+                SaxionApp.drawRectangle(911, 375, 125, 125);
+            }
 
             //design tekst
             SaxionApp.turnBorderOff();
@@ -780,6 +784,10 @@ public class Application implements Runnable {
             SaxionApp.drawBorderedText("7", 588, 385, 130);
             SaxionApp.drawBorderedText("8", 763, 385, 130);
             SaxionApp.drawBorderedText("0 Back", 10, 630, 50);
+
+            if(inventory[25] == 3){
+                SaxionApp.drawBorderedText("9", 938, 385, 130);
+            }
 
 
             int Levelchoice = SaxionApp.readChar();
@@ -817,8 +825,10 @@ public class Application implements Runnable {
                 createLevel(level);
 
             } else if (Levelchoice == '9') {
-                int level = 9;
-                createLevel(level);
+                if(inventory[25] == 3){
+                    int level = 9;
+                    createLevel(level);
+                }
 
             } else if (Levelchoice == '0') {
                 SelectLevelRunning = false;
@@ -1396,6 +1406,18 @@ public class Application implements Runnable {
 
         SaxionApp.drawBorderedText("Inventory", 40, 92, 75);
         SaxionApp.drawBorderedText("0 Back", 10, 630, 50);
+        if(inventory[25] == 0){
+            SaxionApp.drawBorderedText("Pickaxe: Standard", 200, 630, 50);
+        }
+        else if(inventory[25] == 1){
+            SaxionApp.drawBorderedText("Pickaxe: Iron", 200, 630, 50);
+        }
+        else if(inventory[25] == 2){
+            SaxionApp.drawBorderedText("Pickaxe: Bronze", 200, 630, 50);
+        }
+        else if(inventory[25] == 3){
+            SaxionApp.drawBorderedText("Pickaxe: Diamond", 200, 630, 50);
+        }
         int j = 210;
         for(int i = 0; i < 8; i+=2){
             if(inventory[i]-inventory[i+1] < 100){
